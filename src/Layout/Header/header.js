@@ -6,6 +6,9 @@ class Header extends Component {
         return (
             <header className="header">
                 <p>header</p>
+                <a href="/sing_in">
+                    <button>Sing In</button>
+                </a>
             </header>
         );
     }
