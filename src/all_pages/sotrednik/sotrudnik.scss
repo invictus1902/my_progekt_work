@@ -1,0 +1,13 @@
+.sotrudnik{
+  display: flex;
+  &__nav_menu{
+    width: 20%;
+  }
+  &__content{
+    width: 80%;
+  }
+}
+
+.none{
+  display: none;
+}
