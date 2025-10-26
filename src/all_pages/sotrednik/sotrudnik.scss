@@ -11,13 +11,15 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+
     &__no_active,
     &__active {
-      img{
+      img {
         width: 24px;
         height: 24px;
         fill: currentColor;
       }
+
       padding: 16px 16px;
       display: flex;
       align-items: center;
@@ -27,7 +29,7 @@
       cursor: pointer;
     }
 
-    &__active{
+    &__active {
       font-family: Roboto;
       font-size: 14px;
       line-height: 22px;
@@ -48,16 +50,38 @@
 
   &__content {
     width: 80%;
-    &__home{
-      &__work_info{
-        &__left{
-          width: 25%;
+
+    &__home {
+      &__work_info {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        &__left {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          gap:20px;
           background: #FFFFFFFF; /* white */
           border-radius: 10px;
           box-shadow: 0px 0px 1px #171a1f12, 0px 0px 2px #171a1f1F; /* shadow-xs */
-        }
-        &__right{
+          &__info {
+            &__top {
+              //width: 125px;
+            }
 
+            &__line {
+
+            }
+
+            &__bottom {
+
+            }
+          }
+        }
+
+        &__right{
+          width: 35%;
         }
       }
     }

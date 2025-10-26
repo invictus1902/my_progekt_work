@@ -23,7 +23,44 @@ const Sotrudnik = () => {
                 <div className={`${state === 1 ? 'sotrudnik__content__home' : 'none'}`}>
                     <h1>Панель сотрудника</h1>
                     <div className="sotrudnik__content__home__work_info">
-                        <div className="sotrudnik__content__work_info__left"></div>
+                        <div className="sotrudnik__content__home__work_info__left">
+                            <div className="sotrudnik__content__home__work_info__left__info">
+                                <div className="sotrudnik__content__home__work_info__left__info__top">
+                                    <p>Дата</p>
+                                </div>
+                                <div className="sotrudnik__content__home__work_info__left__info__line"></div>
+                                <div className="sotrudnik__content__home__work_info__left__info__bottom">
+                                    <p>2024-07-29</p>
+                                </div>
+                            </div>
+                            <div className="sotrudnik__content__home__work_info__left__info">
+                                <div className="sotrudnik__content__home__work_info__left__info__top">
+                                    <p>Время прихода</p>
+                                </div>
+                                <div className="sotrudnik__content__home__work_info__left__info__line"></div>
+                                <div className="sotrudnik__content__home__work_info__left__info__bottom">
+                                    <p>09:00</p>
+                                </div>
+                            </div>
+                            <div className="sotrudnik__content__home__work_info__left__info">
+                                <div className="sotrudnik__content__home__work_info__left__info__top">
+                                    <p>Время ухода</p>
+                                </div>
+                                <div className="sotrudnik__content__home__work_info__left__info__line"></div>
+                                <div className="sotrudnik__content__home__work_info__left__info__bottom">
+                                    <p>17:30</p>
+                                </div>
+                            </div>
+                            <div className="sotrudnik__content__home__work_info__left__info">
+                                <div className="sotrudnik__content__home__work_info__left__info__top">
+                                    <p>Отработано часов</p>
+                                </div>
+                                <div className="sotrudnik__content__home__work_info__left__info__line"></div>
+                                <div className="sotrudnik__content__home__work_info__left__info__bottom">
+                                    <p>8.5</p>
+                                </div>
+                            </div>
+                        </div>
                         <div className="sotrudnik__content__work_info__right"></div>
                     </div>
                 </div>
