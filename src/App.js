@@ -17,6 +17,7 @@ function App() {
                     <Route path="it" element={<ItSpashel/>}/>
                     <Route path='admin' element={<Admin/>}/>
                     <Route path='sotrudnik' element={<Sotrudnik/>}/>
+                    <Route path='it_spashel' element={<ItSpashel/>}/>
                 </Route>
             </Routes>
         </>

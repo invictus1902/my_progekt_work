@@ -52,30 +52,39 @@
     width: 80%;
 
     &__home {
+      margin-left: 15px;
       &__work_info {
         display: flex;
         align-items: center;
         justify-content: space-around;
         &__left {
+          padding: 15px;
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
           width: 100%;
-          gap:20px;
           background: #FFFFFFFF; /* white */
           border-radius: 10px;
           box-shadow: 0px 0px 1px #171a1f12, 0px 0px 2px #171a1f1F; /* shadow-xs */
           &__info {
             &__top {
-              //width: 125px;
+              margin-left: 20px;
+              font-family: Roboto;
+              font-size: 14px;
+              line-height: 20px;
+              font-weight: 600;
+              color: #0F74C7FF;
             }
 
             &__line {
-
+              height: 2px;
+              width: 100%;
+              background: #56979e;
             }
 
             &__bottom {
-
+              text-align: center;
+              margin-left: 10px;
             }
           }
         }

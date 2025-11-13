@@ -16,6 +16,9 @@ const Header = () => {
         } else if (location.pathname === '/sotrudnik') {
             setPath('/sotrudnik');
         }
+        else if(location.pathname === '/it_spashel') {
+            setPath('/it_spashel')
+        }
     }, []);
     console.log(path)
 
@@ -31,6 +34,9 @@ const Header = () => {
                     </a>
                     <a href="/admin">
                         <p className={`${path === '/admin' ? 'header__left__nav__active_p' : 'header__left__nav__p'}`}>Панель администратора</p>
+                    </a>
+                    <a href="it_spashel">
+                        <p className={`${path === '/it_spashel' ? 'header__left__nav__active_p' : 'header__left__nav__p'}`}>it dev</p>
                     </a>
                 </div>
             </div>
