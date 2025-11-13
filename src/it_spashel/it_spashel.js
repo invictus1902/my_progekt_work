@@ -13,12 +13,14 @@ const ItSpashel = () => {
     const [visota, setVisota] = useState(0);
     const [shirina, setShirina] = useState(0);
     const [glubina, setGlubina] = useState(0);
-    const [coll,setColl] = useState(0);
+    const [coll, setColl] = useState(0);
+    const [tumbaStola, setTumbaStola] = useState(0);
 
     const [formVisota, setFormVisota] = useState('');
     const [formShirina, setFormShirina] = useState('');
     const [formGlubina, setFormGlubina] = useState('');
-    const [fromColl,setFromColl] = useState('');
+    const [fromColl, setFromColl] = useState('');
+    const [formTumbaStola, setFormTumbaStola] = useState('');
 
 
     const [kryshka, setKryshkas] = useState('');
@@ -26,6 +28,13 @@ const ItSpashel = () => {
     const [cargando, setCargando] = useState('');
     const [polca_dno, setPolca_dno] = useState('');
     const [fasadai, setFasadai] = useState('');
+    const [stol, setStol] = useState('');
+    const [cargaStol, setCargaStol] = useState('');
+    const [plashka, setPlashkas] = useState('');
+    const [fasad, setFasad] = useState('');
+    const [yshikDlina, setYshikDlina] = useState('');
+    const [yshikShirina, setYshikShirina] = useState('');
+    const [peregorodka, setPeregorodka] = useState('');
 
 
     const handleSubmit = (e) => {
@@ -35,22 +44,46 @@ const ItSpashel = () => {
         setShirina(Number(formShirina));
         setGlubina(Number(formGlubina));
         setColl(Number(fromColl));
+        setTumbaStola(Number(formTumbaStola));
 
+        if (mebel === 0) {
+            setStol(formShirina + ' : ' + formGlubina + ' ' + fromColl * 1 + 'шт');
+            setBokas((Number(formVisota) - 16) + ' : ' + (Number(formGlubina) - 100) + ' ' + fromColl * 3 + 'шт')
+            setPolca_dno(formTumbaStola - 32 + ' : ' + (Number((formGlubina) - 100) - 16) + ' ' + fromColl * 2 + 'шт')
+            setCargando(formTumbaStola - 32 + ' : 70 ' + fromColl * 1 + 'шт')
+            setCargaStol((Number(((formShirina)-116)-formTumbaStola)) + ' : ' + '500 ' + fromColl * 1 + 'шт')
+            setYshikDlina('450 : 100 ' + fromColl*2 + 'шт')
+            setYshikShirina((Number((formTumbaStola)-64)-24) + ' : 100 ' + fromColl*2 + 'шт')
+            setPlashkas((Number(formTumbaStola)-32) + ' : 100 ' + fromColl * 2 + 'шт')
+            setFasad('146 : ' + (Number(formTumbaStola)-2) + fromColl * 1 + 'шт')
+            setFasadai((Number(formVisota)-240) + ' : ' + (Number(formTumbaStola)-2) + ' ' + fromColl*1 + 'шт')
+        } else if (mebel === 2) {
+            if (formShirina < 850){
+                setKryshkas(formShirina + ' : ' + (Number(formGlubina) + 16) + ' ' + fromColl * 1 + 'шт');
+                setBokas((Number(formVisota) - 16) + ' : ' + formGlubina + ' ' + fromColl * 2 + 'шт');
+                setCargando((Number(formShirina) - 32) + ' : 70 ' + ' ' + fromColl * 1 + 'шт');
+                setPolca_dno((Number(formShirina) - 32) + ' : ' + formGlubina + ' ' + fromColl * 5 + 'шт');
+                setFasadai(((Number(formShirina) / 2) - 4) + ' : 730 ' + ' ' + fromColl * 2 + 'шт');
+                setPeregorodka('')
 
-        if (mebel === 2) {
-            setKryshkas(formShirina + ' : ' + (Number(formGlubina) + 16) + ' ' + fromColl * 1 + 'шт');
-            setBokas((Number(formVisota) - 16) + ' : ' + formGlubina + ' ' + fromColl * 2 + 'шт');
-            setCargando((Number(formShirina) - 32) + ' : 70 ' + ' ' + fromColl * 1 + 'шт');
-            setPolca_dno((Number(formShirina) - 32) + ' : ' + formGlubina + ' ' + fromColl * 5 + 'шт');
-            setFasadai(((Number(formShirina) / 2) - 4) + ' : 730 ' + ' ' + fromColl * 2 + 'шт');
-        }
-
-        else{
+            }
+            if (formShirina > 850){
+                setKryshkas(formShirina + ' : ' + (Number(formGlubina) + 16) + ' ' + fromColl * 1 + 'шт');
+                setBokas((Number(formVisota) - 16) + ' : ' + formGlubina + ' ' + fromColl * 2 + 'шт');
+                setCargando((Number(formShirina) - 32) + ' : 70 ' + ' ' + fromColl * 1 + 'шт');
+                setPeregorodka((Number(formVisota)-102) + ' : ' + formGlubina + ' ' + fromColl*1 + 'шт')
+            }
+        } else {
             setKryshkas('');
             setBokas('');
             setCargando('');
             setPolca_dno('');
             setFasadai('')
+            setYshikDlina('')
+            setYshikShirina('')
+            setCargaStol('')
+            setPlashkas('')
+            setFasad('')
         }
 
         console.log("Итоговые данные:", {
@@ -107,6 +140,13 @@ const ItSpashel = () => {
                         onChange={(e) => setFormGlubina(e.target.value)}
                     />
                     <input
+                        className={`${mebel === 0 ? 'it_spashel__mebeli__itog' : 'none'}`}
+                        type="number"
+                        placeholder="ширина тумбы"
+                        value={formTumbaStola}
+                        onChange={(e) => setFormTumbaStola(e.target.value)}
+                    />
+                    <input
                         type="number"
                         placeholder="Колличество"
                         value={fromColl}
@@ -120,11 +160,24 @@ const ItSpashel = () => {
                 <p>Глубина: {glubina}</p>
                 <p>__________________________________________</p>
             </div>
-            <div className="it_spashel__mebeli__itog">
+            <div className={`${mebel === 2 ? 'it_spashel__mebeli__itog' : 'none'}`}>
                 <p>крышка - {kryshka}</p>
                 <p>бок - {bok}</p>
                 <p>полка + дно - {polca_dno}</p>
                 <p>царга - {cargando}</p>
+                <p>перегородка - {peregorodka}</p>
+                <p>двери - {fasadai}</p>
+            </div>
+            <div className={`${mebel === 0 ? 'it_spashel__mebeli__itog' : 'none'}`}>
+                <p>стол - {stol}</p>
+                <p>бок - {bok}</p>
+                <p>полка + дно - {polca_dno}</p>
+                <p>царга - {cargando}</p>
+                <p>царга - {cargaStol}</p>
+                <p>ящик длинна - {yshikDlina}</p>
+                <p>ящик ширина - {yshikShirina}</p>
+                <p>плашка - {plashka}</p>
+                <p>фасад - {fasad}</p>
                 <p>двери - {fasadai}</p>
             </div>
         </div>
