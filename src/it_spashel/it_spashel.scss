@@ -1,9 +1,15 @@
 .it_spashel{
   &__mebeli{
-    height: 100px;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    row-gap: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+    button{
+      height: 70px;
+      width: 250px;
+    }
     &__no_active{
       display: flex;
       align-items: center;
