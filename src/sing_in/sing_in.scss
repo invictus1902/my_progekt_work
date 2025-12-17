@@ -20,26 +20,9 @@
       display: flex;
       justify-content: end;
       align-items: center;
-      &__x {
-        display: flex;
-        align-items: center;
-        &__left {
-          top: 0px;
-          width: 50px;
-          border-width: 1px;
-          margin-right: -50px;
-          border-color: #434752; /* neutral-400 */
-          border-style: solid;
-          transform: rotate(45deg);
-        }
-
-        &__right {
-          width: 50px;
-          border-width: 1px;
-          border-color: #434752; /* neutral-400 */
-          border-style: solid;
-          transform: rotate(315deg);
-        }
+      img{
+        width: 48px;
+        height: 48px;
       }
     }
 
@@ -161,4 +144,16 @@
       }
     }
   }
+}
+.sing_in__error {
+  color: #d32f2f;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.sing_in__main__bottom form input:focus {
+  border-color: #0F74C7FF;
+  box-shadow: 0 0 0 3px rgba(15, 116, 199, 0.2);
 }

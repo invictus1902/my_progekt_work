@@ -1,0 +1,2718 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "ivan@example.com",
+      "password": "1234",
+      "login": "1234",
+      "fullName": "Иванов Иван Иванович",
+      "avatar": "",
+      "role": "user",
+      "badgeId": "EMP001"
+    },
+    {
+      "id": 2,
+      "email": "emir@admin.com",
+      "password": "1234",
+      "login": "emir",
+      "fullName": "Эмир Каримов",
+      "avatar": "",
+      "role": "admin",
+      "badgeId": "ADM001"
+    },
+    {
+      "id": 3,
+      "email": "anna@example.com",
+      "password": "1234",
+      "login": "anna",
+      "fullName": "Анна Петрова",
+      "avatar": "",
+      "role": "user",
+      "badgeId": "EMP002"
+    }
+  ],
+  "workSessions": [
+    {
+      "id": 1,
+      "userId": 1,
+      "date": "2025-12-15",
+      "startTime": "09:00:00",
+      "endTime": "16:41:42",
+      "durationMinutes": 462,
+      "status": "completed",
+      "editedBy": null
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "date": "2025-12-17",
+      "startTime": "07:30:00",
+      "endTime": "16:50:00",
+      "durationMinutes": 560,
+      "status": "manually_edited",
+      "editedBy": 2
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "date": "2025-12-17",
+      "startTime": "08:30:00",
+      "endTime": "12:00:00",
+      "durationMinutes": 210,
+      "status": "manually_edited",
+      "editedBy": 2
+    },
+    {
+      "userId": 2,
+      "date": "2025-12-17",
+      "startTime": "16:52:15",
+      "endTime": "16:52:25",
+      "durationMinutes": 0,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 4
+    },
+    {
+      "userId": 2,
+      "date": "2025-12-17",
+      "startTime": "17:02:16",
+      "endTime": "17:02:30",
+      "durationMinutes": 0,
+      "status": "completed",
+      "editedBy": 2,
+      "id": 5
+    },
+    {
+      "userId": 3,
+      "date": "2025-12-17",
+      "startTime": "17:02:43",
+      "endTime": "17:02:45",
+      "durationMinutes": 0,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 6
+    },
+    {
+      "userId": 1,
+      "date": "2025-12-17",
+      "startTime": "17:03:26",
+      "endTime": "17:03:41",
+      "durationMinutes": 0,
+      "status": "completed",
+      "editedBy": 2,
+      "id": 7
+    }
+  ],
+  "product": [
+    {
+      "id": 1,
+      "img": "utilse/odnotumboviy_stol.png",
+      "title": "Однотумбовый стол",
+      "conditions": [
+        "stoleshka",
+        "utolsh",
+        "tumbaStola"
+      ],
+      "details": {
+        "stoleshka": [
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 50
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 3
+            }
+          },
+          {
+            "key": "zadnay_stenka",
+            "label": "задняя стенка",
+            "size": [
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 50
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "fasad",
+            "label": "фасад",
+            "size": [
+              {
+                "op": "fixed",
+                "value": 148
+              },
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 2
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "dveri",
+            "label": "двери",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 274
+              },
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 2
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          }
+        ],
+        "utolsh": [
+          {
+            "key": "stol",
+            "label": "стол",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "plus",
+                "value": 10
+              },
+              {
+                "from": "glubina",
+                "op": "plus",
+                "value": 10
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "utolsh1",
+            "label": "утолщенка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "plus",
+                "value": 10
+              },
+              {
+                "op": "fixed",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "utolsh2",
+            "label": "утолщенка",
+            "size": [
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 190
+              },
+              {
+                "op": "fixed",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 3
+            }
+          },
+          {
+            "key": "zadnay_stenka",
+            "label": "задняя стенка",
+            "size": [
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 32
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "fasad",
+            "label": "фасад",
+            "size": [
+              {
+                "op": "fixed",
+                "value": 148
+              },
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 2
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "dveri",
+            "label": "двери",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 256
+              },
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 2
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          }
+        ],
+        "standart": [
+          {
+            "key": "stol",
+            "label": "стол",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 3
+            }
+          },
+          {
+            "key": "zadnay_stenka",
+            "label": "задняя стенка",
+            "size": [
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "fasad",
+            "label": "фасад",
+            "size": [
+              {
+                "op": "fixed",
+                "value": 148
+              },
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 2
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "dveri",
+            "label": "двери",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 240
+              },
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 2
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          }
+        ]
+      },
+      "details_statik": [
+        {
+          "key": "polca_dno",
+          "label": "полка + дно",
+          "size": [
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 32
+            },
+            {
+              "from": "glubina",
+              "op": "minus",
+              "value": 116
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 2
+          }
+        },
+        {
+          "key": "carga",
+          "label": "царга",
+          "size": [
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 32
+            },
+            {
+              "op": "fixed",
+              "value": 70
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 1
+          }
+        },
+        {
+          "key": "cargaStol",
+          "label": "царга стола",
+          "size": [
+            {
+              "from": "shirina",
+              "op": "minus",
+              "value": 116
+            },
+            {
+              "op": "minus_from",
+              "from": "tumbaStola"
+            },
+            {
+              "op": "fixed",
+              "value": 500
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 1
+          }
+        },
+        {
+          "key": "yashik_dlina",
+          "label": "ящик",
+          "size": [
+            {
+              "op": "fixed",
+              "value": 450
+            },
+            {
+              "op": "fixed",
+              "value": 100
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 2
+          }
+        },
+        {
+          "key": "yashik_shirina",
+          "label": "ящик",
+          "size": [
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 88
+            },
+            {
+              "op": "fixed",
+              "value": 100
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 2
+          }
+        },
+        {
+          "key": "plashka",
+          "label": "планка",
+          "size": [
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 32
+            },
+            {
+              "op": "fixed",
+              "value": 100
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "img": "utilse/двухтумбовый_стол.jpg",
+      "title": "Двухтумбовый стол",
+      "conditions": [
+        "tumbaStola",
+        "stoleshka",
+        "utolsh"
+      ],
+      "details": {
+        "standart": [
+          {
+            "key": "stol",
+            "label": "стол",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 4
+            }
+          }
+        ]
+      },
+      "details_statik": [
+        {
+          "key": "carga",
+          "label": "царга",
+          "size": [
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 32
+            },
+            {
+              "op": "fixed",
+              "value": 70
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 2
+          }
+        },
+        {
+          "key": "plashka",
+          "label": "планка",
+          "size": [
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 32
+            },
+            {
+              "op": "fixed",
+              "value": 100
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 4
+          }
+        },
+        {
+          "key": "polca_dno",
+          "label": "полка + дно",
+          "size": [
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 32
+            },
+            {
+              "from": "glubina",
+              "op": "minus",
+              "value": 116
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 4
+          }
+        },
+        {
+          "key": "zadnay_stenka",
+          "label": "задняя стенка",
+          "size": [
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 32
+            },
+            {
+              "from": "visota",
+              "op": "minus",
+              "value": 16
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 2
+          }
+        },
+        {
+          "key": "yashik_dlina",
+          "label": "ящик",
+          "size": [
+            {
+              "op": "fixed",
+              "value": 450
+            },
+            {
+              "op": "fixed",
+              "value": 100
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 4
+          }
+        },
+        {
+          "key": "yashik_shirina",
+          "label": "ящик",
+          "size": [
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 88
+            },
+            {
+              "op": "fixed",
+              "value": 100
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 4
+          }
+        },
+        {
+          "key": "cargaStol",
+          "label": "царга стола",
+          "size": [
+            {
+              "from": "shirina",
+              "op": "minus",
+              "value": 100
+            },
+            {
+              "op": "fixed",
+              "value": 500
+            },
+            {
+              "op": "minus_mul",
+              "from": "tumbaStola",
+              "mul": 2
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 1
+          }
+        },
+        {
+          "key": "fasad",
+          "label": "фасад",
+          "size": [
+            {
+              "op": "fixed",
+              "value": 148
+            },
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 2
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 2
+          }
+        },
+        {
+          "key": "dveri",
+          "label": "двери",
+          "size": [
+            {
+              "from": "visota",
+              "op": "minus",
+              "value": 240
+            },
+            {
+              "from": "tumbaStola",
+              "op": "minus",
+              "value": 2
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "img": "utilse/шкаф_для_документов.jpg",
+      "title": "Шкаф для документов",
+      "conditions": [],
+      "details": {
+        "standart": [
+          {
+            "if": {
+              "from": "shirina",
+              "op": "range",
+              "min": 601,
+              "max": 849
+            },
+            "details": [
+              {
+                "key": "kryshka",
+                "label": "крышка",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "fixed"
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "plus",
+                    "value": 16
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              },
+              {
+                "key": "bok",
+                "label": "бок",
+                "size": [
+                  {
+                    "from": "visota",
+                    "op": "minus",
+                    "value": 16
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "fixed"
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 2
+                }
+              },
+              {
+                "key": "carga",
+                "label": "царга",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "minus",
+                    "value": 32
+                  },
+                  {
+                    "op": "fixed",
+                    "value": 70
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              },
+              {
+                "key": "polca_dno",
+                "label": "полка + дно",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "minus",
+                    "value": 32
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "fixed"
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 5
+                }
+              },
+              {
+                "key": "dveri",
+                "label": "двери",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "divide",
+                    "value": 2,
+                    "minus": 4
+                  },
+                  {
+                    "op": "fixed",
+                    "value": 730
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 2
+                }
+              }
+            ]
+          },
+          {
+            "if": {
+              "from": "shirina",
+              "op": "range",
+              "min": 851,
+              "max": 1000
+            },
+            "details": [
+              {
+                "key": "kryshka",
+                "label": "крышка",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "fixed"
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "plus",
+                    "value": 16
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              },
+              {
+                "key": "bok",
+                "label": "бок",
+                "size": [
+                  {
+                    "from": "visota",
+                    "op": "minus",
+                    "value": 16
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "fixed"
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 2
+                }
+              },
+              {
+                "key": "carga",
+                "label": "царга",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "minus",
+                    "value": 32
+                  },
+                  {
+                    "op": "fixed",
+                    "value": 70
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              },
+              {
+                "key": "peregorodka",
+                "label": "перегородка",
+                "size": [
+                  {
+                    "from": "visota",
+                    "op": "minus",
+                    "value": 102
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "fixed"
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              },
+              {
+                "key": "polca_L",
+                "label": "полка левая",
+                "size": [
+                  {
+                    "op": "fixed",
+                    "value": 476
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "fixed"
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              },
+              {
+                "key": "polca_R",
+                "label": "полка правая",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "minus",
+                    "value": 524
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "fixed"
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 4
+                }
+              },
+              {
+                "key": "dno",
+                "label": "дно",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "minus",
+                    "value": 32
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "fixed"
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              },
+              {
+                "key": "fasad_R",
+                "label": "фасад правый",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "minus",
+                    "value": 504
+                  },
+                  {
+                    "op": "fixed",
+                    "value": 730
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              },
+              {
+                "key": "fasad_L",
+                "label": "фасад левый",
+                "size": [
+                  {
+                    "from": "visota",
+                    "op": "minus",
+                    "value": 90
+                  },
+                  {
+                    "op": "fixed",
+                    "value": 496
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 4,
+      "img": "utilse/шкаф_для_одежды_2двери.jpg",
+      "title": "Шкаф для одежды",
+      "conditions": [],
+      "details": {
+        "standart": [
+          {
+            "key": "kryshka",
+            "label": "крышка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "plus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "carga",
+            "label": "царга",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "op": "fixed",
+                "value": 70
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "polca_dno",
+            "label": "полка + дно",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "fasad",
+            "label": "фасад",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "divide",
+                "value": 2,
+                "minus": 4
+              },
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 90
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 5,
+      "img": "utilse/шкаф_пенал_для_одежды.jpg",
+      "title": "Шкаф пенал для одежды",
+      "conditions": [
+        "dveri"
+      ],
+      "details": {
+        "standart": [
+          {
+            "if": {
+              "from": "shirina",
+              "op": "lt",
+              "value": 601
+            },
+            "details": [
+              {
+                "key": "kryshka",
+                "label": "крышка",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "fixed"
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "plus",
+                    "value": 16
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              },
+              {
+                "key": "bok",
+                "label": "бок",
+                "size": [
+                  {
+                    "from": "visota",
+                    "op": "minus",
+                    "value": 16
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "fixed"
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 2
+                }
+              },
+              {
+                "key": "carga",
+                "label": "царга",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "minus",
+                    "value": 32
+                  },
+                  {
+                    "op": "fixed",
+                    "value": 70
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              },
+              {
+                "key": "polca_dno",
+                "label": "полка + дно",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "minus",
+                    "value": 32
+                  },
+                  {
+                    "from": "glubina",
+                    "op": "fixed"
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 5
+                }
+              },
+              {
+                "key": "fasad",
+                "label": "фасад",
+                "size": [
+                  {
+                    "from": "shirina",
+                    "op": "minus",
+                    "value": 2
+                  },
+                  {
+                    "op": "fixed",
+                    "value": 730
+                  }
+                ],
+                "count": {
+                  "from": "coll",
+                  "mul": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 6,
+      "img": "utilse/стол_приставка.jpg",
+      "title": "Стол приставка",
+      "conditions": [
+        "utolsh",
+        "stoleshka"
+      ],
+      "details": {
+        "standart": [
+          {
+            "key": "stol",
+            "label": "стол",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "cargaStol",
+            "label": "царга",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 132
+              },
+              {
+                "op": "fixed",
+                "value": 500
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 7,
+      "img": "utilse/тумбачка маленькая.jpg",
+      "title": "Тумба маленькая",
+      "conditions": [],
+      "details": {
+        "standart": [
+          {
+            "key": "kryshka",
+            "label": "крышка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "plus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "carga",
+            "label": "царга",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "op": "fixed",
+                "value": 70
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "polca_dno",
+            "label": "полка + дно",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "zadnay_stenka",
+            "label": "задняя стенка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "yashik_dlina",
+            "label": "ящик",
+            "size": [
+              {
+                "op": "fixed",
+                "value": 450
+              },
+              {
+                "op": "fixed",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "yashik_shirina",
+            "label": "ящик",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 88
+              },
+              {
+                "op": "fixed",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "fasad",
+            "label": "фасад",
+            "size": [
+              {
+                "op": "fixed",
+                "value": 148
+              },
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 2
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "dveri",
+            "label": "двери",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 240
+              },
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 2
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 8,
+      "img": "utilse/шкаф полка.jpg",
+      "title": "Шкаф полка закрытый",
+      "conditions": [],
+      "details": {
+        "standart": [
+          {
+            "key": "kryshka",
+            "label": "крышка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "plus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "carga",
+            "label": "царга",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "op": "fixed",
+                "value": 70
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "polca_dno",
+            "label": "полка + дно",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 5
+            }
+          },
+          {
+            "key": "dveri",
+            "label": "двери",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 90
+              },
+              {
+                "from": "shirina",
+                "op": "divide",
+                "value": 2,
+                "minus": 4
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 9,
+      "img": "utilse/Шкаф для одежды с перегородкой по центру.jpg",
+      "title": "Шкаф для одежды с перегородкой по центру",
+      "conditions": [],
+      "details": {
+        "standart": [
+          {
+            "key": "kryshka",
+            "label": "крышка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "plus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "carga",
+            "label": "царга",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "op": "fixed",
+                "value": 70
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "peregorodka",
+            "label": "перегородка",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 102
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "polka",
+            "label": "полка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "divide",
+                "value": 2,
+                "minus": 24
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "dno",
+            "label": "дно",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "dveri",
+            "label": "двери",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 90
+              },
+              {
+                "from": "shirina",
+                "op": "divide",
+                "value": 2,
+                "minus": 4
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 10,
+      "img": "utilse/тумба с полкой и ящикаи.png",
+      "title": "Тумбочка с полкой на 200 и ящиками 3шт",
+      "conditions": [],
+      "details": {
+        "standart": [
+          {
+            "key": "kryshka",
+            "label": "крышка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "plus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "carga",
+            "label": "царга",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "op": "fixed",
+                "value": 70
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "polka_dno",
+            "label": "полка + дно",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "zadnay_stenka",
+            "label": "задняя стенка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "yashik_dlina",
+            "label": "ящик",
+            "size": [
+              {
+                "op": "fixed",
+                "value": 450
+              },
+              {
+                "op": "fixed",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 6
+            }
+          },
+          {
+            "key": "yashik_shirina",
+            "label": "ящик",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 88
+              },
+              {
+                "op": "fixed",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 6
+            }
+          },
+          {
+            "key": "fasad",
+            "label": "фасад",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 290,
+                "divide": 3,
+                "minus": 4
+              },
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 2
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 3
+            }
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 11,
+      "img": "utilse/Тумба с полкаой и дном.jpg",
+      "title": "Тумба с полкой и дном",
+      "conditions": [
+        "call_dveri",
+        "stoleshka",
+        "utolsh"
+      ],
+      "details": {
+        "stoleshka": [
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 50
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 50
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "peregorodka",
+            "label": "перегородка",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 136
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 50
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "fasad",
+            "label": "фасад",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 124
+              },
+              {
+                "from": "shirina",
+                "op": "divide",
+                "value": "call_dveri",
+                "minus": 4
+              }
+            ],
+            "count": {
+              "from": "call_dveri",
+              "mul": 1
+            }
+          }
+        ],
+        "standart": [
+          {
+            "key": "kryshka",
+            "label": "крышка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "plus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 50
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "peregorodka",
+            "label": "перегородка",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 102
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 50
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "fasad",
+            "label": "фасад",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 90
+              },
+              {
+                "from": "shirina",
+                "op": "divide",
+                "value": "call_dveri",
+                "minus": 4
+              }
+            ],
+            "count": {
+              "from": "call_dveri",
+              "mul": 1
+            }
+          }
+        ]
+      },
+      "details_statik": [
+        {
+          "key": "carga",
+          "label": "царга",
+          "size": [
+            {
+              "from": "shirina",
+              "op": "minus",
+              "value": 32
+            },
+            {
+              "op": "fixed",
+              "value": 70
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 1
+          }
+        },
+        {
+          "key": "dno",
+          "label": "дно",
+          "size": [
+            {
+              "from": "shirina",
+              "op": "minus",
+              "value": 32
+            },
+            {
+              "from": "glubina",
+              "op": "minus",
+              "value": 50
+            }
+          ],
+          "count": {
+            "from": "coll",
+            "mul": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "img": "utilse/шкаф стеллаж.jpg",
+      "title": "Шкаф стеллаж",
+      "conditions": [],
+      "details": {
+        "standart": [
+          {
+            "key": "kryshka",
+            "label": "крышка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "plus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "carga",
+            "label": "царга",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "op": "fixed",
+                "value": 70
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "polca_dno",
+            "label": "полка + дно",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 6
+            }
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 13,
+      "img": "utilse/шкаф_со_стеклом.jpeg",
+      "title": "Шкаф книжный со стеклом",
+      "conditions": [],
+      "details": {
+        "standart": [
+          {
+            "key": "kryshka",
+            "label": "крышка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "plus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "carga",
+            "label": "царга",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "op": "fixed",
+                "value": 70
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "polca_dno",
+            "label": "полка + дно",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 5
+            }
+          },
+          {
+            "key": "planki_dveri",
+            "label": "планки для дверей со стеклом",
+            "size": [
+              {
+                "op": "fixed",
+                "value": 2700
+              },
+              {
+                "op": "fixed",
+                "value": 68
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 3
+            }
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 14,
+      "img": "utilse/шкаф_для_документов_со_стеклом.jpg",
+      "title": "Шкаф для документов со стеклом",
+      "conditions": [],
+      "details": {
+        "standart": [
+          {
+            "key": "kryshka",
+            "label": "крышка",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "plus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "carga",
+            "label": "царга",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "op": "fixed",
+                "value": 70
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "polca_dno",
+            "label": "полка + дно",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 5
+            }
+          },
+          {
+            "key": "dveri",
+            "label": "двери",
+            "size": [
+              {
+                "op": "fixed",
+                "value": 730
+              },
+              {
+                "from": "shirina",
+                "op": "divide",
+                "value": 2,
+                "minus": 4
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "planki_dveri",
+            "label": "планки для дверей со стеклом",
+            "size": [
+              {
+                "op": "fixed",
+                "value": 2700
+              },
+              {
+                "op": "fixed",
+                "value": 68
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 3
+            }
+          }
+        ]
+      },
+      "details_statik": []
+    },
+    {
+      "id": 15,
+      "img": "utilse/1 тумбовый стол 3ящика.webp",
+      "title": "Однотумбовый стол c 3-ящиками",
+      "conditions": [
+        "tumbaStola",
+        "stoleshka",
+        "utolsh"
+      ],
+      "details": {
+        "standart": [
+          {
+            "key": "stol",
+            "label": "стол",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "fixed"
+              },
+              {
+                "from": "glubina",
+                "op": "fixed"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "cargaStol",
+            "label": "царга стола",
+            "size": [
+              {
+                "from": "shirina",
+                "op": "minus",
+                "value": 116
+              },
+              {
+                "op": "fixed",
+                "value": 500
+              },
+              {
+                "op": "minus_from",
+                "from": "tumbaStola"
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "bok",
+            "label": "бок",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 3
+            }
+          },
+          {
+            "key": "zadnay_stenka",
+            "label": "задняя стенка",
+            "size": [
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 16
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "polca_dno",
+            "label": "дно",
+            "size": [
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "from": "glubina",
+                "op": "minus",
+                "value": 116
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "carga",
+            "label": "царга",
+            "size": [
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "op": "fixed",
+                "value": 70
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 1
+            }
+          },
+          {
+            "key": "plashka",
+            "label": "планка",
+            "size": [
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 32
+              },
+              {
+                "op": "fixed",
+                "value": 100
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 2
+            }
+          },
+          {
+            "key": "yashik_dlina",
+            "label": "ящик",
+            "size": [
+              {
+                "op": "fixed",
+                "value": 450
+              },
+              {
+                "op": "fixed",
+                "value": 150
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 6
+            }
+          },
+          {
+            "key": "yashik_shirina",
+            "label": "ящик",
+            "size": [
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 88
+              },
+              {
+                "op": "fixed",
+                "value": 150
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 6
+            }
+          },
+          {
+            "key": "fasad",
+            "label": "фасад",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 90,
+                "divide": 3,
+                "minus": 4
+              },
+              {
+                "from": "tumbaStola",
+                "op": "minus",
+                "value": 2
+              }
+            ],
+            "count": {
+              "from": "coll",
+              "mul": 3
+            }
+          }
+        ]
+      },
+      "details_statik": []
+    }
+  ]
+}

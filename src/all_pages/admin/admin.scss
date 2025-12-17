@@ -1,0 +1,150 @@
+.admin {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h1 {
+    font-size: 28px;
+    color: #0F74C7FF;
+    margin-bottom: 30px;
+  }
+
+  &__table {
+    background: #FFFFFFFF;
+    border-radius: 10px;
+    box-shadow: 0px 0px 1px #171a1f12, 0px 0px 2px #171a1f1F;
+    overflow: hidden;
+  }
+
+  &__table_header,
+  &__table_row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr 1.2fr 1.5fr;
+    padding: 16px;
+    align-items: center;
+    border-bottom: 1px solid #DEE1E6FF;
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  &__table_header {
+    background: #F2F4F8FF;
+    font-weight: 600;
+    color: #171A1FFF;
+  }
+
+  &__table_row {
+    &:hover {
+      background: #F8FAFD;
+    }
+  }
+
+  .name {
+    font-weight: 500;
+  }
+
+  .status {
+    font-size: 13px;
+    &.active { color: #28a745; }
+    &.completed { color: #565D6DFF; }
+    &.manually_edited { color: #856404; }
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn_start {
+    padding: 8px 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+
+    &:hover { background: #218838; }
+  }
+
+  .btn_end {
+    padding: 8px 12px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+
+    &:hover { background: #c82333; }
+  }
+}
+
+@media (max-width: 968px) {
+  .admin__table_header,
+  .admin__table_row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    text-align: center;
+  }
+}
+.btn_edit {
+  padding: 6px 10px;
+  background: #ffc107;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover { background: #e0a800; }
+}
+.admin__user_header {
+  padding: 16px;
+  background: #F2F4F8FF;
+  font-weight: 600;
+  border-bottom: 2px solid #0F74C7FF;
+
+  .name_group {
+    font-size: 16px;
+  }
+}
+
+.sessions_list {
+  border-bottom: 1px solid #DEE1E6FF;
+}
+
+.no_sessions {
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.add_new {
+  background: #f8fff8;
+  font-style: italic;
+}
+
+.btn_edit {
+  padding: 6px 10px;
+  background: #ffc107;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-left: 6px;
+
+  &:hover {
+    background: #e0a800;
+  }
+}
+
+.access_denied {
+  text-align: center;
+  padding: 50px;
+  font-size: 24px;
+  color: #dc3545;
+}

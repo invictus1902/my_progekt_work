@@ -1,29 +1,69 @@
-import React from 'react';
-import './sing_in.scss'
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CustomContext } from '../Context'; // поправь путь, если Context в другой папке
+import './sing_in.scss';
 
 const SingIn = () => {
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const { login: loginUser } = useContext(CustomContext); // функция login из Context
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setError('');
+
+        if (!login.trim() || !password.trim()) {
+            setError('Заполните все поля');
+            return;
+        }
+
+        const success = loginUser(login, password); // вызываем функцию из Context
+
+        if (success) {
+            // Успешный вход — редиректим в зависимости от роли
+            if (success.role === 'admin') {
+                navigate('/admin');
+            } else {
+                navigate('/sotrudnik');
+            }
+        } else {
+            setError('Неверный логин или пароль');
+        }
+    };
+
     return (
         <div className="sing_in">
             <div className="sing_in__main">
-                <div className="sing_in__main__top">
-                    <a href="/">
-                        <div className="sing_in__main__top__x">
-                            <div className="sing_in__main__top__x__left"></div>
-                            <div className="sing_in__main__top__x__right"></div>
-                        </div>
-                    </a>
-                </div>
                 <div className="sing_in__main__center">
                     <h1>TimeTrack</h1>
                     <p>Войдите, чтобы продолжить работу</p>
                 </div>
+
                 <div className="sing_in__main__bottom">
-                    <form action="">
-                        <p>Электронная почта</p>
-                        <input type="text" placeholder="ваша.почта@example.com"/>
+                    <form onSubmit={handleSubmit}>
+                        <p>Логин или email</p>
+                        <input
+                            type="text"
+                            placeholder="1234 или emir"
+                            value={login}
+                            onChange={(e) => setLogin(e.target.value)}
+                            autoFocus
+                        />
+
                         <p>Пароль</p>
-                        <input type="text" placeholder="Введите ваш пароль"/>
-                        <button>Войти</button>
+                        <input
+                            type="password"  // теперь правильно скрывает символы
+                            placeholder="Введите ваш пароль"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+
+                        {error && <p className="sing_in__error">{error}</p>}
+
+                        <button type="submit">Войти</button>
                     </form>
                 </div>
             </div>
