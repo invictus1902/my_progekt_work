@@ -23,12 +23,21 @@
     {
       "id": 3,
       "email": "anna@example.com",
-      "password": "1234",
+      "password": "$2a$10$6SeNi0fPVCVid7AiqZr4aOS7eDXAPVzmedNkVwyJjRRlZHhmitUI6",
       "login": "anna",
       "fullName": "Анна Петрова",
       "avatar": "",
       "role": "user",
       "badgeId": "EMP002"
+    },
+    {
+      "email": "abdurazakovemir@gmail.com",
+      "password": "$2a$10$1rOWkvUcTsw6rwWwKc9Mlux1JQABRnj/a0OC7FrgJZ19eOkjTVjky",
+      "fullName": "qwer",
+      "login": "1234",
+      "badgeId": "EMP022",
+      "role": "user",
+      "id": 4
     }
   ],
   "workSessions": [
@@ -101,6 +110,166 @@
       "status": "completed",
       "editedBy": 2,
       "id": 7
+    },
+    {
+      "userId": 2,
+      "date": "2025-12-17",
+      "startTime": "12:18:49",
+      "endTime": "13:18:57",
+      "durationMinutes": 0,
+      "status": "completed",
+      "editedBy": 2,
+      "id": 8
+    },
+    {
+      "userId": 2,
+      "date": "2025-12-18",
+      "startTime": "08:50:00",
+      "endTime": "09:48:00",
+      "durationMinutes": 58,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 9
+    },
+    {
+      "userId": 2,
+      "date": "2025-12-18",
+      "startTime": "09:00:00",
+      "endTime": "09:51:00",
+      "durationMinutes": 51,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 10
+    },
+    {
+      "userId": 4,
+      "date": "2025-12-18",
+      "startTime": "10:20:00",
+      "endTime": "10:23:00",
+      "durationMinutes": 3,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 12
+    },
+    {
+      "userId": 4,
+      "date": "2025-12-18",
+      "startTime": "10:46:00",
+      "endTime": "10:46:00",
+      "durationMinutes": 0,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 14
+    },
+    {
+      "userId": 4,
+      "date": "2025-12-18",
+      "startTime": "10:40:00",
+      "endTime": "10:46:28",
+      "durationMinutes": 6,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 15
+    },
+    {
+      "userId": 4,
+      "date": "2025-12-18",
+      "startTime": "11:00:00",
+      "endTime": "11:02:00",
+      "durationMinutes": 2,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 16
+    },
+    {
+      "userId": 4,
+      "date": "2025-12-18",
+      "startTime": "11:01:00",
+      "endTime": "11:10:00",
+      "durationMinutes": 9,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 17
+    },
+    {
+      "userId": 4,
+      "date": "2025-12-18",
+      "startTime": "11:00:00",
+      "endTime": "11:02:59",
+      "durationMinutes": 3,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 18
+    },
+    {
+      "userId": 4,
+      "date": "2025-12-18",
+      "startTime": "01:03:00",
+      "endTime": "11:03:20",
+      "durationMinutes": 600,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 19
+    },
+    {
+      "userId": 4,
+      "date": "2025-12-18",
+      "startTime": "01:04:00",
+      "endTime": "11:04:20",
+      "durationMinutes": 600,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 20
+    },
+    {
+      "userId": 3,
+      "date": "2025-12-18",
+      "startTime": "01:19:00",
+      "endTime": "11:19:00",
+      "durationMinutes": 600,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 21
+    },
+    {
+      "userId": 3,
+      "date": "2025-12-18",
+      "startTime": "01:20:00",
+      "endTime": "02:20:00",
+      "durationMinutes": 60,
+      "status": "manually_edited",
+      "editedBy": 4,
+      "id": 22
+    },
+    {
+      "userId": 1,
+      "date": "2025-12-19",
+      "startTime": "09:12:00",
+      "endTime": "09:12:02",
+      "durationMinutes": 0,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 23
+    },
+    {
+      "userId": 2,
+      "date": "2025-12-19",
+      "startTime": "01:34:00",
+      "endTime": "11:34:00",
+      "durationMinutes": 600,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 24
+    },
+    {
+      "userId": 2,
+      "date": "2025-12-19",
+      "startTime": "11:35:07",
+      "endTime": "17:27:14",
+      "durationMinutes": 352,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 25
     }
   ],
   "product": [

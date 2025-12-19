@@ -52,6 +52,11 @@ const Header = () => {
                                     Моя панель
                                 </p>
                             </Link>
+                            <Link to="/edit_mebel">
+                                <p className={isActive('/edit_mebel') ? 'active' : ''}>
+                                    Редактор мебели
+                                </p>
+                            </Link>
                         </>
                     )}
                     <Link to="/catalog">

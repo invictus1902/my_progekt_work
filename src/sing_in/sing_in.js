@@ -1,29 +1,32 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CustomContext } from '../Context'; // поправь путь, если Context в другой папке
+import { CustomContext } from '../Context';
 import './sing_in.scss';
 
 const SingIn = () => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const { login: loginUser } = useContext(CustomContext); // функция login из Context
+    const { login: loginUser } = useContext(CustomContext);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
         if (!login.trim() || !password.trim()) {
             setError('Заполните все поля');
+            setLoading(false);
             return;
         }
 
-        const success = loginUser(login, password); // вызываем функцию из Context
+        const success = await loginUser(login, password);
 
+        setLoading(false);
         if (success) {
-            // Успешный вход — редиректим в зависимости от роли
             if (success.role === 'admin') {
                 navigate('/admin');
             } else {
@@ -31,6 +34,7 @@ const SingIn = () => {
             }
         } else {
             setError('Неверный логин или пароль');
+            // Остаёмся на странице логина
         }
     };
 
@@ -55,7 +59,7 @@ const SingIn = () => {
 
                         <p>Пароль</p>
                         <input
-                            type="password"  // теперь правильно скрывает символы
+                            type="password"
                             placeholder="Введите ваш пароль"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -63,7 +67,9 @@ const SingIn = () => {
 
                         {error && <p className="sing_in__error">{error}</p>}
 
-                        <button type="submit">Войти</button>
+                        <button type="submit" disabled={loading}>
+                            {loading ? 'Вход...' : 'Войти'}
+                        </button>
                     </form>
                 </div>
             </div>

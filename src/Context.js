@@ -186,6 +186,26 @@ export const Context = ({ children }) => {
         }
     };
 
+    // Добавить нового сотрудника
+    const addUser = async (newUser) => {
+        try {
+            const res = await axios.post(`${API_BASE}/users`, newUser);
+            setUsers(prev => [...prev, res.data]);
+        } catch (err) {
+            console.error('Ошибка добавления:', err);
+        }
+    };
+
+// Редактировать сотрудника
+    const updateUser = async (userId, updates) => {
+        try {
+            const res = await axios.patch(`${API_BASE}/users/${userId}`, updates);
+            setUsers(prev => prev.map(u => u.id === userId ? { ...u, ...res.data } : u));
+        } catch (err) {
+            console.error('Ошибка обновления:', err);
+        }
+    };
+
     const value = {
         currentUser,
         users,
@@ -196,7 +216,9 @@ export const Context = ({ children }) => {
         endShift,
         manualStartShift,
         manualEndShift,
-        editSession
+        editSession,
+        addUser,
+        updateUser
         // Дальше добавим: createSession, editSession и т.д.
     };
 

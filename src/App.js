@@ -7,6 +7,7 @@ import SingIn from "./sing_in/sing_in";
 import Admin from "./all_pages/admin/admin";
 import Sotrudnik from "./all_pages/sotrednik/sotrudnik";
 import Catalog from "./catalog_mebeli/catalog";
+import EditMebel from "./all_pages/edit_mebel/edit_mebel";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path='sotrudnik' element={<Sotrudnik/>}/>
                     <Route path='it_spashel' element={<ItSpashel/>}/>
                     <Route path='catalog' element={<Catalog/>}/>
+                    <Route path="/edit_mebel" element={<EditMebel/>}/>
                 </Route>
             </Routes>
         </>

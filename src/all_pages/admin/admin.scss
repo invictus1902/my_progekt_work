@@ -148,3 +148,55 @@
   font-size: 24px;
   color: #dc3545;
 }
+.admin__users_section {
+  margin-top: 60px;
+  h2 {
+    font-size: 24px;
+  }
+}
+
+.users_list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.user_item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.btn_add {
+  margin-bottom: 20px;
+  background: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.user_form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+
+  input, select {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+  }
+
+  button {
+    padding: 10px;
+    background: #0F74C7FF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+}
