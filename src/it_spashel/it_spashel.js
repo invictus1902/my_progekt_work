@@ -87,6 +87,7 @@ const CALCULATORS = {
             newResult.fasad_R = `фасад левый - ${shirina - 504} : 730 ${coll}шт`;
             newResult.fasad_L = `фасад правый - ${visota - (20 + 70)} : 496 ${coll}шт`;
         }
+
         return newResult;
     },
 
@@ -238,9 +239,11 @@ const CALCULATORS = {
         newResult.carga = `царга - ${shirina - 32} : 70 ${coll}шт`;
         newResult.polca_dno = `полка+дно - ${shirina - 32} : ${glubina} ${coll * 5}шт`;
         newResult.dveri = `двери - 730 : ${shirina / 2 - 4} ${coll * 2}шт`;
-        newResult.planki_dveri = `планки для дверей со стеклом - 2700 : 68 ${coll * 3}шт`;
+        newResult.planki_dveri = `планки для дверей со стеклом - 2700 : 60 ${coll * 3}шт`;
+        newResult.dveri_stekla = `размеры фасада со стеклом - ${visota - 820} : ${shirina / 2 - 4} ${coll * 2}шт`;
         return newResult;
     },
+
     15: ({visota, shirina, glubina, coll, tumbaStola, stoleshka, utolsh}) => {
         const newResult = {};
         newResult.stol = `стол - ${shirina} : ${glubina} ${coll}шт`;

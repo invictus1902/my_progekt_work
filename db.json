@@ -270,6 +270,56 @@
       "status": "manually_edited",
       "editedBy": 2,
       "id": 25
+    },
+    {
+      "userId": 2,
+      "date": "2025-12-22",
+      "startTime": "08:30:00",
+      "endTime": null,
+      "durationMinutes": null,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 26
+    },
+    {
+      "userId": 1,
+      "date": "2025-12-28",
+      "startTime": "12:10:41",
+      "endTime": "12:10:44",
+      "durationMinutes": 0,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 27
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-05",
+      "startTime": "08:30:00",
+      "endTime": null,
+      "durationMinutes": null,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 28
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-07",
+      "startTime": "08:30:00",
+      "endTime": "11:01:00",
+      "durationMinutes": 151,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 29
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-07",
+      "startTime": "12:25:00",
+      "endTime": "19:25:00",
+      "durationMinutes": 420,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 30
     }
   ],
   "product": [
@@ -2275,7 +2325,7 @@
               {
                 "from": "visota",
                 "op": "minus",
-                "value": 102
+                "value": 118
               },
               {
                 "from": "glubina",
@@ -2658,13 +2708,30 @@
               },
               {
                 "op": "fixed",
-                "value": 68
+                "value": 60
               }
             ],
             "count": {
               "from": "coll",
               "mul": 3
             }
+          },
+          {
+            "key": "razmer_fasada_stekla",
+            "label": "размеры фасада со стеклом ",
+            "size": [
+              {
+                "from": "visota",
+                "op": "minus",
+                "value": 820
+              },
+              {
+                "from": "shirina",
+                "op": "divide",
+                "value": 2
+              }
+            ],
+            "count": 15
           }
         ]
       },

@@ -206,6 +206,63 @@ export const Context = ({ children }) => {
         }
     };
 
+    // Загрузка продуктов (мебели)
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const [usersRes, sessionsRes, productsRes] = await Promise.all([
+                    axios.get(`${API_BASE}/users`),
+                    axios.get(`${API_BASE}/workSessions`),
+                    axios.get(`${API_BASE}/product`)
+                ]);
+                setUsers(usersRes.data);
+                setWorkSessions(sessionsRes.data);
+                setProducts(productsRes.data);
+
+                const saved = localStorage.getItem('currentUser');
+                if (saved) setCurrentUser(JSON.parse(saved));
+            } catch (err) {
+                console.error('Ошибка загрузки данных:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadData();
+    }, []);
+
+// Добавление новой мебели
+    const addProduct = async (newProduct) => {
+        try {
+            const res = await axios.post(`${API_BASE}/product`, newProduct);
+            setProducts(prev => [...prev, res.data]);
+        } catch (err) {
+            console.error('Ошибка добавления мебели:', err);
+        }
+    };
+
+// Обновление мебели
+    const updateProduct = async (productId, updates) => {
+        try {
+            const res = await axios.patch(`${API_BASE}/product/${productId}`, updates);
+            setProducts(prev => prev.map(p => p.id === productId ? { ...p, ...res.data } : p));
+        } catch (err) {
+            console.error('Ошибка обновления мебели:', err);
+        }
+    };
+
+// Удаление мебели
+    const deleteProduct = async (productId) => {
+        try {
+            await axios.delete(`${API_BASE}/product/${productId}`);
+            setProducts(prev => prev.filter(p => p.id !== productId));
+        } catch (err) {
+            console.error('Ошибка удаления мебели:', err);
+        }
+    };
+
     const value = {
         currentUser,
         users,
@@ -218,7 +275,11 @@ export const Context = ({ children }) => {
         manualEndShift,
         editSession,
         addUser,
-        updateUser
+        updateUser,
+        products
+        // addProduct,
+        // updateProduct,
+        // deleteProduct
         // Дальше добавим: createSession, editSession и т.д.
     };
 
