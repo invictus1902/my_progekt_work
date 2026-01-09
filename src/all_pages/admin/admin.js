@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { useForm } from "react-hook-form";
 import './admin.scss';
 import { CustomContext } from '../../Context'; // Проверь путь! Если Context в src/, то '../Context' или './Context'
@@ -12,13 +12,16 @@ const Admin = () => {
         manualEndShift,
         editSession,
         addUser,
-        updateUser
+        updateUser,
     } = useContext(CustomContext);
 
     // === ВСЕ ХУКИ ТОЛЬКО ЗДЕСЬ, В НАЧАЛЕ ===
     const [editingUser, setEditingUser] = useState(null);
     const [isAdding, setIsAdding] = useState(false);
     const { register, handleSubmit, reset } = useForm();
+    const [modalUser, setModalUser] = useState(false);
+    const [openUse,setOpenUse] = useState({});
+    const [seenIds,setSeenIds] = useState([]);
 
     const today = new Date().toISOString().split('T')[0];
 
@@ -138,154 +141,214 @@ const Admin = () => {
         reset();
     };
 
+
+    const userSee = () =>{
+        setModalUser(false)
+        setOpenUse({})
+
+    }
+    console.log(workSessions)
+    console.log(modalUser)
+    console.log(openUse)
+
+
+
+
+
+
+
+
     return (
         <div className="admin">
-            <h1>Панель администратора</h1>
+            <div className="admin__top">
+                <div className="admin__top__left">
+                    <h1>Панель администратора</h1>
 
-            {/* Таблица смен */}
-            <div className="admin__table">
-                <div className="admin__table_header">
-                    <span>Сотрудник</span>
-                    <span>Дата</span>
-                    <span>Приход</span>
-                    <span>Уход</span>
-                    <span>Отработано</span>
-                    <span>Статус</span>
-                    <span>Действия</span>
-                </div>
+                    {/* Таблица смен */}
+                    <div className="admin__top__left__table">
+                        <div className="admin__top__left__table__header">
+                            <span>Сотрудник</span>
+                            <span>Дата</span>
+                            <span>Приход</span>
+                            <span>Уход</span>
+                            <span>Отработано</span>
+                            <span>Статус</span>
+                            <span>Действия</span>
+                        </div>
 
-                {users.map(user => {
-                    const sessions = getTodaySessions(user.id);
+                        {users.map(user => {
+                            const sessions = getTodaySessions(user.id);
 
-                    return (
-                        <div key={user.id} className="admin__table_row_group">
-                            <div className="admin__user_header">
-                                <span className="name_group">{user.fullName}</span>
-                            </div>
+                            return (
+                                <div key={user.id} className="admin__top__left__table__row-group">
+                                    <div className="admin__top__left__table__user-header">
+                                        <span className="admin__top__left__table__user-name">{user.fullName}</span>
+                                    </div>
 
-                            <div className="sessions_list">
-                                {sessions.length === 0 ? (
-                                    <div className="admin__table_row no_sessions">
-                                        <span></span>
-                                        <span>{today.split('-').reverse().join('.')}</span>
-                                        <span>-</span>
-                                        <span>-</span>
-                                        <span>-</span>
-                                        <span className="status">Нет смены</span>
-                                        <span className="actions">
-                                            <button onClick={() => manualStartShift(user.id)} className="btn_start">
+                                    <div className="admin__top__left__table__sessions-list">
+                                        {sessions.length === 0 ? (
+                                            <div className="admin__top__left__table__row admin__top__left__table__row--no-sessions">
+                                                <span></span>
+                                                <span>{today.split('-').reverse().join('.')}</span>
+                                                <span>-</span>
+                                                <span>-</span>
+                                                <span>-</span>
+                                                <span className="admin__top__left__table__status">Нет смены</span>
+                                                <span className="admin__top__left__table__actions">
+                                            <button onClick={() => manualStartShift(user.id)} className="admin__top__left__table__btn admin__top__left__table__btn--start">
                                                 Начать смену
                                             </button>
                                         </span>
-                                    </div>
-                                ) : (
-                                    sessions.map(session => {
-                                        const isActive = !session.endTime;
-                                        return (
-                                            <div key={session.id} className="admin__table_row">
-                                                <span></span>
-                                                <span>{today.split('-').reverse().join('.')}</span>
-                                                <span>{formatTime(session.startTime)}</span>
-                                                <span>{formatTime(session.endTime)}</span>
-                                                <span>{formatDuration(session)}</span>
-                                                <span className={`status ${session.status || ''}`}>
+                                            </div>
+                                        ) : (
+                                            sessions.map(session => {
+                                                const isActive = !session.endTime;
+                                                return (
+                                                    <div key={session.id} className="admin__top__left__table__row">
+                                                        <span></span>
+                                                        <span>{today.split('-').reverse().join('.')}</span>
+                                                        <span>{formatTime(session.startTime)}</span>
+                                                        <span>{formatTime(session.endTime)}</span>
+                                                        <span>{formatDuration(session)}</span>
+                                                        <span className={`admin__top__left__table__status admin__top__left__table__status--${session.status || 'completed'}`}>
                                                     {isActive ? '● На работе' :
                                                         session.status === 'manually_edited' ? 'Редактирована' :
                                                             'Завершена'}
                                                 </span>
-                                                <span className="actions">
+                                                        <span className="admin__top__left__table__actions">
                                                     {isActive && (
-                                                        <button onClick={() => manualEndShift(session.id)} className="btn_end">
+                                                        <button onClick={() => manualEndShift(session.id)} className="admin__top__left__table__btn admin__top__left__table__btn--end">
                                                             Завершить
                                                         </button>
                                                     )}
-                                                    <button onClick={() => handleEdit(session)} className="btn_edit">
+                                                            <button onClick={() => handleEdit(session)} className="admin__top__left__table__btn admin__top__left__table__btn--edit">
                                                         ✎ Ред.
                                                     </button>
                                                 </span>
-                                            </div>
-                                        );
-                                    })
-                                )}
+                                                    </div>
+                                                );
+                                            })
+                                        )}
 
-                                <div className="admin__table_row add_new">
-                                    <span></span><span></span><span></span><span></span><span></span><span></span>
-                                    <span className="actions">
-                                        <button onClick={() => manualStartShift(user.id)} className="btn_start">
+                                        <div className="admin__top__left__table__row admin__top__left__table__row--add">
+                                            <span></span><span></span><span></span><span></span><span></span><span></span>
+                                            <span className="admin__top__left__table__actions">
+                                        <button onClick={() => manualStartShift(user.id)} className="admin__top__left__table__btn admin__top__left__table__btn--start">
                                             + Начать новую смену
                                         </button>
                                     </span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-
-            {/* Раздел управления сотрудниками */}
-            <div className="admin__users_section">
-                <h2>Управление сотрудниками</h2>
-
-                <button
-                    onClick={() => {
-                        setIsAdding(true);
-                        setEditingUser(null);
-                        reset();
-                    }}
-                    className="btn_add"
-                >
-                    + Добавить сотрудника
-                </button>
-
-                <div className="users_list">
-                    {users.map(user => (
-                        <div key={user.id} className="user_item">
-                            <span>{user.fullName} ({user.role})</span>
-                            <button
-                                onClick={() => {
-                                    setEditingUser(user);
-                                    reset(user);
-                                    setIsAdding(false);
-                                }}
-                                className="btn_edit"
-                            >
-                                Редактировать
-                            </button>
-                        </div>
-                    ))}
+                            );
+                        })}
+                    </div>
                 </div>
 
-                {(isAdding || editingUser) && (
-                    <form onSubmit={handleSubmit(onSubmitUser)} className="user_form">
-                        <input {...register('fullName', { required: true })} placeholder="ФИО" />
-                        <input {...register('login', { required: true })} placeholder="Логин" />
-                        <input {...register('email', { required: true })} placeholder="Email" />
-                        <input {...register('password', { required: true })} type="password" placeholder="Пароль" />
-                        <input {...register('badgeId')} placeholder="ID бейджика" />
-                        <select {...register('role')}>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                            <option value="manager">Manager</option>
-                            <option value="other">Other</option>
-                        </select>
+                {/* Раздел управления сотрудниками */}
+                <div className="admin__top__right">
+                    <h2>Управление сотрудниками</h2>
 
-                        <div className="form_actions">
-                            <button type="submit">
-                                {editingUser ? 'Сохранить изменения' : 'Добавить сотрудника'}
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setIsAdding(false);
-                                    setEditingUser(null);
-                                    reset();
-                                }}
-                            >
-                                Отмена
-                            </button>
-                        </div>
-                    </form>
-                )}
+                    <button
+                        onClick={() => {
+                            setIsAdding(true);
+                            setEditingUser(null);
+                            reset();
+                        }}
+                        className="admin__top__right__btn-add"
+                    >
+                        + Добавить сотрудника
+                    </button>
+
+                    <div className="admin__top__right__users-list">
+                        {users.map(user => (
+                            <div key={user.id} className="admin__top__right__user-item">
+                                <span>{user.fullName} ({user.role})</span>
+                                <button
+                                    onClick={() => {
+                                        setEditingUser(user);
+                                        reset(user);
+                                        setIsAdding(false);
+                                    }}
+                                    className="admin__top__right__btn-edit"
+                                >
+                                    Редактировать
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+
+                    {(isAdding || editingUser) && (
+                        <form onSubmit={handleSubmit(onSubmitUser)} className="admin__top__right__user-form">
+                            <input {...register('fullName', { required: true })} placeholder="ФИО" />
+                            <input {...register('login', { required: true })} placeholder="Логин" />
+                            <input {...register('email', { required: true })} placeholder="Email" />
+                            <input {...register('password', { required: true })} type="password" placeholder="Пароль" />
+                            <input {...register('badgeId')} placeholder="ID бейджика" />
+                            <select {...register('role')}>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                                <option value="manager">Manager</option>
+                                <option value="other">Other</option>
+                            </select>
+
+                            <div className="admin__top__right__form-actions">
+                                <button type="submit">
+                                    {editingUser ? 'Сохранить изменения' : 'Добавить сотрудника'}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setIsAdding(false);
+                                        setEditingUser(null);
+                                        reset();
+                                    }}
+                                >
+                                    Отмена
+                                </button>
+                            </div>
+                        </form>
+                    )}
+                </div>
+            </div>
+            <div className="admin__bottom">
+                <div className="admin__top__right">
+                    <h2>Управление сотрудниками</h2>
+
+                    <div className="admin__top__right__users-list">
+                        {users.map(user => (
+                            <div key={user.id} className="admin__top__right__user-item">
+                                <span>{user.fullName} ({user.role})</span>
+                                <button
+                                    onClick={() => setOpenUse(user) || setModalUser(true)}
+                                    className="admin__top__right__btn-edit"
+                                >
+                                    посмотреть
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+
+                    {
+                        modalUser === true && (
+                            <div>
+                                <h1>{openUse.fullName}</h1>
+                                <button onClick={()=>userSee()}>close</button>
+                                {
+                                    workSessions
+                                   .map(ai=>(
+                                            <div>
+                                                <div className="">
+                                                    <h1>{ai.date}</h1>
+                                                </div>
+                                            </div>
+                                        ))
+                                }
+                            </div>
+                        )
+                    }
+
+                </div>
             </div>
         </div>
     );

@@ -102,26 +102,3 @@
   }
 }
 
-// Responsive для мобильных (опционально, добавь при необходимости)
-@media (max-width: 968px) {
-  .header {
-    flex-direction: column;
-    height: auto;
-    padding: 16px;
-
-    &__left,
-    &__right {
-      width: 100%;
-      justify-content: center;
-    }
-
-    &__nav {
-      margin: 16px 0;
-      justify-content: center;
-    }
-
-    &__right {
-      justify-content: center;
-    }
-  }
-}

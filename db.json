@@ -3,7 +3,7 @@
     {
       "id": 1,
       "email": "ivan@example.com",
-      "password": "1234",
+      "password": "$2a$10$WjticV7wggNJLEzHr4QfCeYwekkohvr.tGm7teYscOQQz.1IB2SA2",
       "login": "1234",
       "fullName": "Иванов Иван Иванович",
       "avatar": "",
@@ -13,9 +13,9 @@
     {
       "id": 2,
       "email": "emir@admin.com",
-      "password": "1234",
+      "password": "qwer",
       "login": "emir",
-      "fullName": "Эмир Каримов",
+      "fullName": "Эмир Абдуразаков",
       "avatar": "",
       "role": "admin",
       "badgeId": "ADM001"
@@ -294,12 +294,12 @@
     {
       "userId": 2,
       "date": "2026-01-05",
-      "startTime": "08:30:00",
-      "endTime": null,
-      "durationMinutes": null,
+      "startTime": "12:25:00",
+      "endTime": "19:25:00",
+      "durationMinutes": 420,
       "status": "manually_edited",
       "editedBy": 2,
-      "id": 28
+      "id": 30
     },
     {
       "userId": 2,
@@ -320,6 +320,66 @@
       "status": "manually_edited",
       "editedBy": 2,
       "id": 30
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-08",
+      "startTime": "08:29:00",
+      "endTime": "13:30:18",
+      "durationMinutes": 301,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 31
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-08",
+      "startTime": "13:30:19",
+      "endTime": "17:59:20",
+      "durationMinutes": 269,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 32
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-08",
+      "startTime": "17:59:22",
+      "endTime": "18:31:45",
+      "durationMinutes": 32,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 33
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-09",
+      "startTime": "09:32:33",
+      "endTime": "17:38:29",
+      "durationMinutes": 486,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 34
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-09",
+      "startTime": "17:38:30",
+      "endTime": "18:49:08",
+      "durationMinutes": 71,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 35
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-09",
+      "startTime": "18:49:09",
+      "endTime": null,
+      "durationMinutes": null,
+      "status": "active",
+      "editedBy": 2,
+      "id": 36
     }
   ],
   "product": [
