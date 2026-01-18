@@ -17,6 +17,7 @@ import ShkafStellaj from './img_mebel/шкаф стеллаж.jpg'
 import ShafSoSteklon1 from './img_mebel/шкаф_со_стеклом.jpeg'
 import ShafSoSteklon2 from './img_mebel/шкаф_для_документов_со_стеклом.jpg'
 import Stol_3_yshika from './img_mebel/1 тумбовый стол 3ящика.webp'
+import ShkafchikNavestnoy from './img_mebel/шкафчик навестной.jpeg'
 
 
 const CALCULATORS = {
@@ -258,6 +259,15 @@ const CALCULATORS = {
         newResult.fasad = `фасад - ${((visota - 86) / 3) - 4} : ${tumbaStola - 2} ${coll * 3}шт`;
 
         return newResult;
+    },
+
+    16: ({visota, shirina, glubina, coll}) => {
+        const newResult = {};
+        newResult.kryshka = `крышка - ${shirina} : ${glubina + 16} ${coll}шт`;
+        newResult.bok = `бок - ${visota - 16} : ${glubina} ${coll * 2}шт`;
+        newResult.polca_dno = `полка+дно - ${shirina - 32} : ${glubina} ${coll * 2}шт`;
+        newResult.dveri = `двери -  ${visota - 20} : ${shirina / 2 - 4} ${coll * 2}шт`;
+        return newResult;
     }
 };
 
@@ -450,6 +460,13 @@ const ItSpashel = () => {
                     <button onClick={() => tipMebeli(15)}
                             className={`${mebel === 15 ? "it_spashel__mebeli__active" : "it_spashel__mebeli__no_active"}`}>
                         15 Однотумбовый стол c 3-ящиками
+                    </button>
+                </div>
+                <div className="it_spashel__mebeli__button_img">
+                    <img src={ShkafchikNavestnoy} alt=""/>
+                    <button onClick={() => tipMebeli(16)}
+                            className={`${mebel === 16 ? "it_spashel__mebeli__active" : "it_spashel__mebeli__no_active"}`}>
+                        16 Шкафчик навестной
                     </button>
                 </div>
             </div>

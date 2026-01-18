@@ -269,10 +269,21 @@ const Admin = () => {
                                         setEditingUser(user);
                                         reset(user);
                                         setIsAdding(false);
+                                        setOpenUse(user);
+                                        setModalUser(true);
                                     }}
                                     className="admin__top__right__btn-edit"
                                 >
                                     Редактировать
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setOpenUse(user);
+                                        setModalUser(true);
+                                    }}
+                                    className="admin__top__right__btn-edit"
+                                >
+                                    Посмотреть
                                 </button>
                             </div>
                         ))}
@@ -312,26 +323,10 @@ const Admin = () => {
                 </div>
             </div>
             <div className="admin__bottom">
-                <div className="admin__top__right">
-                    <h2>Управление сотрудниками</h2>
-
-                    <div className="admin__top__right__users-list">
-                        {users.map(user => (
-                            <div key={user.id} className="admin__top__right__user-item">
-                                <span>{user.fullName} ({user.role})</span>
-                                <button
-                                    onClick={() => setOpenUse(user) || setModalUser(true)}
-                                    className="admin__top__right__btn-edit"
-                                >
-                                    посмотреть
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-
+                <div className="admin__bottom__modal">
                     {
                         modalUser === true && (
-                            <div>
+                            <div className="admin__bottom__modal__true">
                                 <h1>{openUse.fullName}</h1>
                                 <button onClick={()=>userSee()}>close</button>
                                 {
