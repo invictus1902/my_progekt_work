@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const API_URL = 'http://localhost:8080/product';
+const UPLOAD_URL = 'http://localhost:8080/upload';
 
 function FurnitureEditor() {
     const [products, setProducts] = useState([]);
@@ -21,18 +22,111 @@ function FurnitureEditor() {
         setSelected(JSON.parse(JSON.stringify(p)));
     };
 
+    // Основное сохранение (закрывает редактор)
     const save = async () => {
         if (!selected?.id) return;
         try {
-            await fetch(`${API_URL}/${selected.id}`, {
+            const response = await fetch(`${API_URL}/${selected.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(selected),
             });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const updatedProduct = await response.json();
             alert('Изменения сохранены!');
-            setSelected(null);
+            setSelected(null); // Закрываем только здесь
+            fetchProducts();
         } catch (err) {
+            console.error('Ошибка сохранения:', err);
             alert('Ошибка сохранения: ' + err.message);
+        }
+    };
+
+    // Сохранение только img (не закрывает редактор)
+    const saveImg = async () => {
+        if (!selected?.id) return;
+        try {
+            const response = await fetch(`${API_URL}/${selected.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(selected),
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const updatedProduct = await response.json();
+            setSelected(updatedProduct);
+            fetchProducts();
+            // НЕ закрываем редактор
+        } catch (err) {
+            console.error('Ошибка сохранения фото:', err);
+            alert('Ошибка сохранения фото: ' + err.message);
+        }
+    };
+
+    const fetchProducts = async () => {
+        try {
+            const res = await fetch(API_URL);
+            const data = await res.json();
+            setProducts(Array.isArray(data) ? data : [data]);
+        } catch (err) {
+            console.error('Ошибка обновления списка:', err);
+        }
+    };
+
+    const addNewProduct = async () => {
+        const newId = products.length + 1;
+        const newProduct = {
+            id: newId,
+            title: 'Новая мебель',
+            img: '',
+            variables: [
+                { name: 'shirina', label: 'Ширина', default: 800 },
+                { name: 'glubina', label: 'Глубина', default: 400 },
+                { name: 'visota', label: 'Высота', default: 2000 },
+                { name: 'coll', label: 'Количество', default: 1 }
+            ],
+            conditions: [],
+            details: []
+        };
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newProduct),
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const addedProduct = await response.json();
+            alert('Новая мебель добавлена!');
+            fetchProducts();
+            setSelected(addedProduct);
+        } catch (err) {
+            console.error('Ошибка добавления:', err);
+            alert('Ошибка добавления: ' + err.message);
+        }
+    };
+
+    const deleteProduct = async (id) => {
+        if (!window.confirm(`Удалить мебель ID ${id}?`)) return;
+
+        try {
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            alert('Мебель удалена!');
+            fetchProducts();
+            if (selected?.id === id) setSelected(null);
+        } catch (err) {
+            console.error('Ошибка удаления:', err);
+            alert('Ошибка удаления: ' + err.message);
         }
     };
 
@@ -46,6 +140,58 @@ function FurnitureEditor() {
             ref[path[path.length - 1]] = value;
             return copy;
         });
+    };
+
+    // Загрузка фото
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (!selected?.id) {
+            alert('Сохраните мебель сначала, чтобы присвоить ID.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const res = await fetch(UPLOAD_URL, {
+                method: 'POST',
+                body: formData,
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const { path } = await res.json();
+            update(['img'], path);
+            await saveImg(); // Сохраняем только img, не закрываем
+        } catch (err) {
+            console.error('Ошибка загрузки фото:', err);
+            alert('Ошибка загрузки фото: ' + err.message);
+        }
+    };
+
+    // Удаление фото
+    const deletePhoto = async () => {
+        if (!selected.img || !window.confirm('Удалить фото?')) return;
+
+        try {
+            const fileName = selected.img.replace(/^\/utilse\//, '');
+            const res = await fetch(UPLOAD_URL, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fileName }),
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            update(['img'], '');
+            await saveImg(); // Сохраняем только img, не закрываем
+        } catch (err) {
+            console.error('Ошибка удаления фото:', err);
+            alert('Ошибка удаления фото: ' + err.message);
+        }
     };
 
     // Добавление новой переменной
@@ -100,36 +246,146 @@ function FurnitureEditor() {
         <div style={{ padding: 24, fontFamily: 'system-ui', maxWidth: 1200, margin: '0 auto' }}>
             <h1 style={{ marginBottom: 32 }}>Редактор мебели</h1>
 
+            {/* Кнопка добавления новой мебели */}
+            <button
+                onClick={addNewProduct}
+                style={{
+                    background: '#ff6b6b',
+                    color: 'white',
+                    border: 'none',
+                    padding: '12px 24px',
+                    borderRadius: 8,
+                    fontSize: 18,
+                    marginBottom: 24,
+                    cursor: 'pointer'
+                }}
+            >
+                + Добавить новую мебель
+            </button>
+
             {/* Список мебели */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 40 }}>
                 {products.map(p => (
-                    <button
+                    <div
                         key={p.id}
-                        onClick={() => selectProduct(p)}
                         style={{
-                            padding: '12px 24px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 8,
                             background: selected?.id === p.id ? '#0066ff' : '#f0f0f0',
                             color: selected?.id === p.id ? 'white' : '#333',
-                            border: 'none',
+                            padding: '12px 20px',
                             borderRadius: 8,
-                            cursor: 'pointer',
-                            fontWeight: selected?.id === p.id ? 'bold' : 'normal'
+                            cursor: 'pointer'
                         }}
+                        onClick={() => selectProduct(p)}
                     >
-                        {p.title} (ID: {p.id})
-                    </button>
+                        <span>{p.title} (ID: {p.id})</span>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                deleteProduct(p.id);
+                            }}
+                            style={{
+                                background: '#dc3545',
+                                color: 'white',
+                                border: 'none',
+                                padding: '4px 8px',
+                                borderRadius: 4,
+                                fontSize: 12,
+                                cursor: 'pointer'
+                            }}
+                        >
+                            ×
+                        </button>
+                    </div>
                 ))}
             </div>
 
             {selected && (
                 <div style={{ background: '#fff', padding: 32, borderRadius: 12, boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
-                    {/* Название */}
-                    <input
-                        value={selected.title}
-                        onChange={e => update(['title'], e.target.value)}
-                        placeholder="Название мебели"
-                        style={{ fontSize: 28, width: '100%', border: 'none', marginBottom: 32, outline: 'none' }}
-                    />
+                    {/* Название + Фото */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 32 }}>
+                        <input
+                            value={selected.title}
+                            onChange={e => update(['title'], e.target.value)}
+                            placeholder="Название мебели"
+                            style={{ fontSize: 28, flex: 1, border: 'none', outline: 'none' }}
+                        />
+
+                        {/* Блок фото */}
+                        <div style={{
+                            width: 200,
+                            height: 200,
+                            border: '2px dashed #ccc',
+                            borderRadius: 8,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            overflow: 'hidden',
+                            position: 'relative'
+                        }}>
+                            {selected.img ? (
+                                <>
+                                    <img
+                                        src={selected.img.startsWith('http') ? selected.img : `http://localhost:8080/${selected.img.replace(/^\//, '')}`}
+                                        alt="Фото мебели"
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    />
+                                    <button
+                                        onClick={deletePhoto}
+                                        style={{
+                                            position: 'absolute',
+                                            top: 8,
+                                            right: 8,
+                                            background: 'rgba(220, 53, 69, 0.8)',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '4px 8px',
+                                            borderRadius: 4,
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        ×
+                                    </button>
+                                </>
+                            ) : (
+                                <button
+                                    onClick={() => document.getElementById('fileInput').click()}
+                                    style={{
+                                        background: '#28a745',
+                                        color: 'white',
+                                        border: 'none',
+                                        padding: '8px 16px',
+                                        borderRadius: 6,
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    Добавить фото
+                                </button>
+                            )}
+                            <input
+                                type="file"
+                                id="fileInput"
+                                style={{ display: 'none' }}
+                                accept="image/*"
+                                onChange={handleFileUpload}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Альтернатива — ссылка */}
+                    <div style={{ marginBottom: 32 }}>
+                        <input
+                            value={selected.img}
+                            onChange={e => update(['img'], e.target.value)}
+                            placeholder="Или вставьте прямую ссылку на фото (альтернатива)"
+                            style={{ width: '100%', padding: 8, border: '1px solid #ddd', borderRadius: 6 }}
+                        />
+                        <p style={{ fontSize: 12, color: '#666', marginTop: 4 }}>
+                            Ссылка будет работать, пока фото доступно в интернете
+                        </p>
+                    </div>
 
                     {/* Переменные */}
                     <h3 style={{ marginBottom: 16 }}>Переменные (размеры и параметры)</h3>

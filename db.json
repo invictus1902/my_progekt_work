@@ -13,7 +13,7 @@
     {
       "id": 2,
       "email": "emir@admin.com",
-      "password": "qwer",
+      "password": "1234",
       "login": "emir",
       "fullName": "Эмир Абдуразаков",
       "avatar": "",
@@ -38,6 +38,15 @@
       "badgeId": "EMP022",
       "role": "user",
       "id": 4
+    },
+    {
+      "fullName": "Иванов",
+      "login": "1234",
+      "email": "abdurazakovemir@gmail.com",
+      "password": "1234",
+      "badgeId": "ADM010",
+      "role": "admin",
+      "id": 5
     }
   ],
   "workSessions": [
@@ -440,6 +449,66 @@
       "status": "manually_edited",
       "editedBy": 2,
       "id": 42
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-19",
+      "startTime": "08:30:00",
+      "endTime": null,
+      "durationMinutes": null,
+      "status": "manually_edited",
+      "editedBy": 2,
+      "id": 43
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-19",
+      "startTime": "12:16:15",
+      "endTime": null,
+      "durationMinutes": null,
+      "status": "active",
+      "editedBy": 2,
+      "id": null
+    },
+    {
+      "userId": 2,
+      "date": "2026-01-20",
+      "startTime": "10:03:57",
+      "endTime": null,
+      "durationMinutes": null,
+      "status": "active",
+      "editedBy": 2,
+      "id": null
+    },
+    {
+      "userId": 5,
+      "date": "2026-01-20",
+      "startTime": "10:35:51",
+      "endTime": null,
+      "durationMinutes": null,
+      "status": "active",
+      "editedBy": 2,
+      "id": 44
+    },
+    {
+      "userId": 5,
+      "date": "2026-01-20",
+      "startTime": "10:35:54",
+      "endTime": null,
+      "durationMinutes": null,
+      "status": "active",
+      "editedBy": 2,
+      "id": 45
+    },
+    {
+      "userId": 5,
+      "date": "2026-01-20",
+      "startTime": "10:35:57",
+      "endTime": null,
+      "durationMinutes": null,
+      "status": "active",
+      "editedBy": 2,
+      "id": 46
     }
   ],
   "product": [
@@ -1657,7 +1726,7 @@
     },
     {
       "id": 15,
-      "img": "utilse/1 тумбовый стол 3ящика.webp",
+      "img": "",
       "title": "Однотумбовый стол c 3-ящиками",
       "variables": [
         {
@@ -1779,6 +1848,113 @@
         }
       ],
       "details_statik": []
+    },
+    {
+      "id": 16,
+      "title": "стол обеденный ",
+      "img": "",
+      "variables": [
+        {
+          "name": "shirina",
+          "label": "Ширина",
+          "default": 1200
+        },
+        {
+          "name": "glubina",
+          "label": "Глубина",
+          "default": 700
+        },
+        {
+          "name": "visota",
+          "label": "Высота",
+          "default": 750
+        },
+        {
+          "name": "coll",
+          "label": "Количество",
+          "default": 1
+        }
+      ],
+      "conditions": [
+        {
+          "name": "utolsh",
+          "label": "утолщёнка",
+          "type": "flag",
+          "default": false
+        },
+        {
+          "name": "stoleshka",
+          "label": "столешница",
+          "type": "flag",
+          "default": false
+        }
+      ],
+      "details": [
+        {
+          "key": "stol",
+          "label": "стол",
+          "formula_width": "stoleshka ? 0 : shirina",
+          "formula_height": "stoleshka ? 0 : glubina",
+          "count_formula": "stoleshka ? 0 : coll * 1",
+          "if_condition": ""
+        },
+        {
+          "key": "stol",
+          "label": "стол",
+          "formula_width": "shirina + 10",
+          "formula_height": "glubina + 10",
+          "count_formula": "coll * 1",
+          "if_condition": "utolsh"
+        },
+        {
+          "key": "utolsh_shirina",
+          "label": "утолщёнка",
+          "formula_width": "shirina + 10",
+          "formula_height": "100",
+          "count_formula": "coll * 2",
+          "if_condition": "utolsh"
+        },
+        {
+          "key": "utolsh_glubina",
+          "label": "утолщёнка",
+          "formula_width": "glubina - 190",
+          "formula_height": "100",
+          "count_formula": "coll * 2",
+          "if_condition": "utolsh"
+        },
+        {
+          "key": "planki_1",
+          "label": "планкии под столом",
+          "formula_width": "shirina - 100",
+          "formula_height": "100",
+          "count_formula": "coll * 2",
+          "if_condition": ""
+        },
+        {
+          "key": "planki_2",
+          "label": "планкии под столом",
+          "formula_width": "glubina - 132",
+          "formula_height": "100",
+          "count_formula": "coll * 2",
+          "if_condition": ""
+        },
+        {
+          "key": "nogi_1",
+          "label": "Новая деталь",
+          "formula_width": "utolsh ? visota - 32 : visota - 16",
+          "formula_height": "100",
+          "count_formula": "coll * 4",
+          "if_condition": ""
+        },
+        {
+          "key": "nogi_2",
+          "label": "Новая деталь",
+          "formula_width": "utolsh ? visota - 32 : visota - 16",
+          "formula_height": "84",
+          "count_formula": "coll * 4",
+          "if_condition": ""
+        }
+      ]
     }
   ]
 }
