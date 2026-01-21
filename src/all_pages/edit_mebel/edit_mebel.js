@@ -45,13 +45,14 @@ function FurnitureEditor() {
     };
 
     // Сохранение только img (не закрывает редактор)
-    const saveImg = async () => {
-        if (!selected?.id) return;
+    const saveImg = async (productToSave = null) => {
+        const product = productToSave || selected;
+        if (!product?.id) return;
         try {
-            const response = await fetch(`${API_URL}/${selected.id}`, {
+            const response = await fetch(`${API_URL}/${product.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(selected),
+                body: JSON.stringify(product),
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -164,8 +165,15 @@ function FurnitureEditor() {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
             const { path } = await res.json();
-            update(['img'], path);
-            await saveImg(); // Сохраняем только img, не закрываем
+
+            // Создаем копию объекта сразу с новым путем к картинке
+            const updatedProduct = { ...selected, img: path };
+
+            // Обновляем состояние (для UI)
+            setSelected(updatedProduct);
+
+            // Сохраняем напрямую обновленный объект, не дожидаясь setSelected
+            await saveImg(updatedProduct);
         } catch (err) {
             console.error('Ошибка загрузки фото:', err);
             alert('Ошибка загрузки фото: ' + err.message);
@@ -186,8 +194,15 @@ function FurnitureEditor() {
             if (!res.ok) {
                 throw new Error(`HTTP error! status: ${res.status}`);
             }
-            update(['img'], '');
-            await saveImg(); // Сохраняем только img, не закрываем
+
+            // Создаем копию объекта с пустым путем
+            const updatedProduct = { ...selected, img: '' };
+
+            // Обновляем состояние
+            setSelected(updatedProduct);
+
+            // Сохраняем напрямую
+            await saveImg(updatedProduct);
         } catch (err) {
             console.error('Ошибка удаления фото:', err);
             alert('Ошибка удаления фото: ' + err.message);

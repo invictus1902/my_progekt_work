@@ -108,7 +108,10 @@ const Catalog = () => {
                             setInputs(newInputs);
                         }}
                     >
-                        <img src={product.img} alt={product.title} />
+                        <img
+                            src={product.img.startsWith('http') ? product.img : `http://localhost:8080${product.img.startsWith('/') ? '' : '/'}${product.img}`}
+                            alt={product.title}
+                        />
                         <p>{product.id}. {product.title}</p>
                     </div>
                 ))}
@@ -157,18 +160,18 @@ const Catalog = () => {
                             <h3>Результат:</h3>
                             <table className="results-table">
                                 <thead>
-                                <tr>
-                                    <th>Деталь</th>
-                                    <th>Размер и количество</th>
-                                </tr>
+                                    <tr>
+                                        <th>Деталь</th>
+                                        <th>Размер и количество</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                {resultsArray.map(([key, value]) => (
-                                    <tr key={key}>
-                                        <td>{value.split(' — ')[0]}</td>
-                                        <td>{value.split(' — ')[1]}</td>
-                                    </tr>
-                                ))}
+                                    {resultsArray.map(([key, value]) => (
+                                        <tr key={key}>
+                                            <td>{value.split(' — ')[0]}</td>
+                                            <td>{value.split(' — ')[1]}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

@@ -17,9 +17,19 @@ app.use(express.json());
 // Секрет для JWT
 const JWT_SECRET = 'your-secret-key';
 
-// Папка для фото
-const uploadDir = path.join(__dirname, 'public', 'utilse');
-if (!fs.existsSync(uploadDir)) {
+// Папка для фото (вне public, чтобы избежать перезагрузки React)
+const uploadDir = path.join(__dirname, 'uploads');
+
+// Проверка и создание папки uploads
+if (fs.existsSync(uploadDir)) {
+    const stat = fs.statSync(uploadDir);
+    if (!stat.isDirectory()) {
+        console.log('Путь uploads занят файлом. Удаляем и создаем папку...');
+        fs.unlinkSync(uploadDir);
+        fs.mkdirSync(uploadDir, { recursive: true });
+    }
+} else {
+    console.log('Создаем папку uploads...');
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
@@ -41,7 +51,7 @@ const db = new LowSync(adapter, { product: [], users: [], workSessions: [] });
 db.read();
 db.write();
 
-// Static /utilse/
+// Раздаем статику из корня через виртуальный путь /utilse
 app.use('/utilse', express.static(uploadDir));
 
 // Middleware аутентификации (закомментирован)
@@ -119,12 +129,25 @@ app.post('/login', (req, res) => {
     }
 });
 
-// Загрузка фото
-app.post('/upload', upload.single('file'), (req, res) => {
-    if (!req.file) return res.status(400).json({ error: 'Файл не загружен' });
+// Загрузка фото с детальной обработкой ошибок
+app.post('/upload', (req, res) => {
+    upload.single('file')(req, res, (err) => {
+        if (err instanceof multer.MulterError) {
+            console.error('Ошибка Multer:', err);
+            return res.status(500).json({ error: 'Ошибка Multer при загрузке' });
+        } else if (err) {
+            console.error('Неизвестная ошибка загрузки:', err);
+            return res.status(500).json({ error: 'Системная ошибка при загрузке' });
+        }
 
-    const filePath = `/utilse/${req.file.filename}`;
-    res.json({ path: filePath });
+        if (!req.file) {
+            return res.status(400).json({ error: 'Файл не получен' });
+        }
+
+        const filePath = `/utilse/${req.file.filename}`;
+        console.log(`Файл загружен успешно: ${filePath}`);
+        res.json({ path: filePath });
+    });
 });
 
 // Удаление фото
