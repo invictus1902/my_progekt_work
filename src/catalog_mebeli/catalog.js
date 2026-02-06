@@ -125,14 +125,18 @@ const Catalog = () => {
                         {/* Динамические инпуты из variables */}
                         <div className="input-row">
                             {(selectedProduct.variables || []).map(v => (
-                                <input
-                                    key={v.name}
-                                    type="number"
-                                    placeholder={v.label}
-                                    value={inputs[v.name] ?? ''}
-                                    onChange={e => handleInputChange(v.name, e.target.value)}
-                                    required={['shirina', 'glubina', 'visota'].includes(v.name)}
-                                />
+                                <div>
+                                    <p>{v.label}</p>
+                                    <input
+                                        key={v.name}
+                                        type="number"
+                                        placeholder={v.label}
+                                        value={inputs[v.name] ?? ''}
+                                        onChange={e => handleInputChange(v.name, e.target.value)}
+                                        required={['shirina', 'glubina', 'visota'].includes(v.name)}
+                                    />
+                                </div>
+
                             ))}
                         </div>
 
