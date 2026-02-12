@@ -119,7 +119,7 @@ const Catalog = () => {
 
             {selectedProduct && (
                 <>
-                    <h3>{selectedProduct.title}</h3>
+                    <h3>{selectedProduct.title}{selectedProduct.price ? " -- " + selectedProduct.price + "сом" : ""}</h3>
 
                     <form onSubmit={e => { e.preventDefault(); calculate(); }} className="inputs-form">
                         {/* Динамические инпуты из variables */}
@@ -180,6 +180,7 @@ const Catalog = () => {
                             </table>
                         </div>
                     )}
+
                 </>
             )}
         </div>

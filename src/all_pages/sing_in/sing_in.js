@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CustomContext } from '../Context';
+import { CustomContext } from '../../Context';
 import './sing_in.scss';
 
 const SingIn = () => {

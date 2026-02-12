@@ -83,6 +83,7 @@ function FurnitureEditor() {
             id: newId,
             title: 'Новая мебель',
             img: '',
+            price:'',
             variables: [
                 { name: 'shirina', label: 'Ширина', default: 800 },
                 { name: 'glubina', label: 'Глубина', default: 400 },
@@ -401,6 +402,19 @@ function FurnitureEditor() {
                             Ссылка будет работать, пока фото доступно в интернете
                         </p>
                     </div>
+                    {/* установка цен на мебель */}
+                    <div style={{ marginBottom: 32 }}>
+                        <input
+                            value={selected.price}
+                            placeholder="цена"
+                            onChange={e => update(['price'], e.target.value)}
+                            style={{ width: '100%', padding: 8, border: '1px solid #ddd', borderRadius: 6 }}
+                            type="number"
+                        />
+                        <p style={{ fontSize: 12, color: '#666', marginTop: 4 }}>
+                            установите цену
+                        </p>
+                    </div>
 
                     {/* Переменные */}
                     <h3 style={{ marginBottom: 16 }}>Переменные (размеры и параметры)</h3>
@@ -539,6 +553,8 @@ function FurnitureEditor() {
                             </div>
                         </div>
                     ))}
+
+
                     <button
                         onClick={addDetail}
                         style={{ background: '#0066cc', color: 'white', border: 'none', padding: '12px 24px', borderRadius: 6, marginTop: 16 }}
