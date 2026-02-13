@@ -86,7 +86,7 @@ const Catalog = () => {
     const resultsArray = useMemo(() => Object.entries(result), [result]);
 
     return (
-        <div className="catalog">
+        <div className="catalog container">
             <h2>Расчёт мебели</h2>
 
             <div className="products-grid">

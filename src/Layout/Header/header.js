@@ -47,58 +47,57 @@ const Header = () => {
                 </div>
             </div>
             <div className="header__menu_nav_left">
-                <div className="">
-                    <nav className="">
-                        {currentUser.role === 'user' && (
-                            <Link to="/sotrudnik">
-                                <p className={isActive('/sotrudnik') ? 'active' : ''}>
-                                    Панель сотрудника
+                <p className="header__menu_nav_left__name">Management</p>
+                <nav className="">
+                    {currentUser.role === 'user' && (
+                        <Link to="/sotrudnik">
+                            <p className={isActive('/sotrudnik') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
+                                Панель сотрудника
+                            </p>
+                        </Link>
+                    )}
+
+                    {currentUser.role === 'admin' && (
+                        <>
+                            <Link to="/admin">
+                                <p className={isActive('/admin') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
+                                    Панель администратора
                                 </p>
                             </Link>
-                        )}
+                            <Link to="/sotrudnik">
+                                <p className={isActive('/sotrudnik') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
+                                    Моя панель
+                                </p>
+                            </Link>
+                            <Link to="/edit_mebel">
+                                <p className={isActive('/edit_mebel') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
+                                    Редактор мебели
+                                </p>
+                            </Link>
+                        </>
+                    )}
+                    <Link to="/catalog">
+                        <p className={isActive('/catalog') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
+                            Каталог мебели
+                        </p>
+                    </Link>
+                    <Link to="/placing_an_order">
+                        <p className={isActive('/placing_an_order') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
+                            Оформление заказа
+                        </p>
+                    </Link>
+                    <Link to="/order_editor">
+                        <p className={isActive('/order_editor') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
+                            Редактор заказов
+                        </p>
+                    </Link>
+                    <Link to="/view_orders">
+                        <p className={isActive('/view_orders') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
+                            Просмотр заказов
+                        </p>
+                    </Link>
 
-                        {currentUser.role === 'admin' && (
-                            <>
-                                <Link to="/admin">
-                                    <p className={isActive('/admin') ? 'active' : ''}>
-                                        Панель администратора
-                                    </p>
-                                </Link>
-                                <Link to="/sotrudnik">
-                                    <p className={isActive('/sotrudnik') ? 'active' : ''}>
-                                        Моя панель
-                                    </p>
-                                </Link>
-                                <Link to="/edit_mebel">
-                                    <p className={isActive('/edit_mebel') ? 'active' : ''}>
-                                        Редактор мебели
-                                    </p>
-                                </Link>
-                            </>
-                        )}
-                        <Link to="/catalog">
-                            <p className={isActive('/catalog') ? 'active' : ''}>
-                                Каталог мебели
-                            </p>
-                        </Link>
-                        <Link to="/placing_an_order">
-                            <p className={isActive('/placing_an_order') ? 'active' : ''}>
-                                Оформление заказа
-                            </p>
-                        </Link>
-                        <Link to="/order_editor">
-                            <p className={isActive('/order_editor') ? 'active' : ''}>
-                                Редактор заказов
-                            </p>
-                        </Link>
-                        <Link to="/view_orders">
-                            <p className={isActive('/view_orders') ? 'active' : ''}>
-                                Просмотр заказов
-                            </p>
-                        </Link>
-
-                    </nav>
-                </div>
+                </nav>
             </div>
         </header>
     );
