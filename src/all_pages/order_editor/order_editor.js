@@ -98,8 +98,8 @@ const OrderEditor = () => {
                         <div className="order_editor__preview-head">
                             <h5>Предварительный просмотр</h5>
                             <div>
-                                <button type="button" className="active">2D Схема</button>
-                                <button type="button">3D Модель</button>
+                                <button type="button" className="active">Фото</button>
+                                <button type="button">2D Схема</button>
                             </div>
                         </div>
                         <div className="order_editor__preview-image">

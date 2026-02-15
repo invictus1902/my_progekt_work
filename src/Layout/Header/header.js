@@ -5,6 +5,7 @@ import defaultAvatar from '../img_layout/avatar_img.jpg'; // заглушка
 import exitImg from '../img_layout/exit_img.svg';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {CustomContext} from '../../Context'; // путь к твоему Context
+import {animateScroll} from "react-scroll";
 
 
 const Header = () => {
@@ -20,6 +21,16 @@ const Header = () => {
         logout(); // функция из контекста, очистим состояние
         navigate('/'); // на страницу логина
     };
+
+
+    const toTop = () => {
+        animateScroll.scrollToTop({
+            delay: 0,
+            duration: 0,
+            smooth: true
+        })
+    };
+
 
     // Определяем активный путь (упростим логику)
     const isActive = (path) => location.pathname === path;
@@ -59,39 +70,39 @@ const Header = () => {
 
                     {currentUser.role === 'admin' && (
                         <>
-                            <Link to="/admin">
+                            <Link to="/admin" onClick={()=>toTop()}>
                                 <p className={isActive('/admin') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
                                     Панель администратора
                                 </p>
                             </Link>
-                            <Link to="/sotrudnik">
+                            <Link to="/sotrudnik" onClick={()=>toTop()}>
                                 <p className={isActive('/sotrudnik') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
                                     Моя панель
                                 </p>
                             </Link>
-                            <Link to="/edit_mebel">
+                            <Link to="/edit_mebel" onClick={()=>toTop()}>
                                 <p className={isActive('/edit_mebel') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
                                     Редактор мебели
                                 </p>
                             </Link>
                         </>
                     )}
-                    <Link to="/catalog">
+                    <Link to="/catalog" onClick={()=>toTop()}>
                         <p className={isActive('/catalog') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
                             Каталог мебели
                         </p>
                     </Link>
-                    <Link to="/placing_an_order">
+                    <Link to="/placing_an_order" onClick={()=>toTop()}>
                         <p className={isActive('/placing_an_order') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
                             Оформление заказа
                         </p>
                     </Link>
-                    <Link to="/order_editor">
+                    <Link to="/order_editor" onClick={()=>toTop()}>
                         <p className={isActive('/order_editor') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
                             Редактор заказов
                         </p>
                     </Link>
-                    <Link to="/view_orders">
+                    <Link to="/view_orders" onClick={()=>toTop()}>
                         <p className={isActive('/view_orders') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
                             Просмотр заказов
                         </p>

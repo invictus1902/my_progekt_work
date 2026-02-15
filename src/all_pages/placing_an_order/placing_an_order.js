@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './placing_an_order.scss';
 
 const orderItems = [
@@ -17,6 +17,29 @@ const orderItems = [
 ];
 
 const PlacingAnOrder = () => {
+
+    const [text_diskription, setText_diskription] = useState("Фурнитуру цвета графит . Цвет столов и фасадов белый . Каркас дуб санома");
+    const [text, setText] = useState("После готовности заказа сделать доставку когда позвонит клиент");
+
+
+    const handleChange1 = (e) => {
+        const target = e.target;
+        // Сначала сбрасываем высоту, чтобы она могла уменьшиться при удалении текста
+        target.style.height = 'inherit';
+        // Устанавливаем высоту равную высоте контента
+        target.style.height = `${target.scrollHeight}px`;
+        setText(target.value);
+    };
+    const handleChange2 = (e) => {
+        const target = e.target;
+        // Сначала сбрасываем высоту, чтобы она могла уменьшиться при удалении текста
+        target.style.height = 'inherit';
+        // Устанавливаем высоту равную высоте контента
+        target.style.height = `${target.scrollHeight}px`;
+        setText_diskription(target.value);
+    };
+
+
     return (
         <section className="placing_an_order">
             <div className="placing_an_order__content">
@@ -35,6 +58,51 @@ const PlacingAnOrder = () => {
                         <label className="placing_an_order__field">
                             <span>Название компании</span>
                             <input type="text" defaultValue={'ООО "Мебельный Стиль"'} />
+                        </label>
+
+                        <label className="placing_an_order__field">
+                            <span>Адрес доставки</span>
+                            <input type="text" defaultValue={'Город-Бишкек улица-Слоботская дом-293'} />
+                        </label>
+
+                        <label className="placing_an_order__field">
+                            <span>Цвет материала</span>
+                            <input type="text" defaultValue={'Дуб-Санома'} />
+                        </label>
+
+                        <label className="placing_an_order__field">
+                            <span>Примечание к заказу</span>
+
+                            <textarea
+                                value={text}
+                                onChange={handleChange1}
+                                placeholder='Примечание к заказу'
+                                style={{
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    resize: 'none',
+                                    minHeight: '40px'
+                                }}
+                            />
+
+                            {/*<input type="text" defaultValue={'После готовности заказа сделать доставку когда позвонит клиент'} />*/}
+                        </label>
+
+                        <label className="placing_an_order__field">
+                            <span>Описание к заказу</span>
+
+                            <textarea
+                                value={text_diskription}
+                                // value={"Фурнитуру цвета графит . Цвет столов и фасадов белый . Каркас дуб санома"}
+                                onChange={handleChange2}
+                                placeholder='Описание к заказу'
+                                style={{
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    resize: 'none',
+                                    minHeight: '40px'
+                                }}
+                            />
                         </label>
                     </div>
                 </article>
