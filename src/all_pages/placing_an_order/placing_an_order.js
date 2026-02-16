@@ -85,7 +85,6 @@ const PlacingAnOrder = () => {
                                 }}
                             />
 
-                            {/*<input type="text" defaultValue={'После готовности заказа сделать доставку когда позвонит клиент'} />*/}
                         </label>
 
                         <label className="placing_an_order__field">
@@ -93,7 +92,6 @@ const PlacingAnOrder = () => {
 
                             <textarea
                                 value={text_diskription}
-                                // value={"Фурнитуру цвета графит . Цвет столов и фасадов белый . Каркас дуб санома"}
                                 onChange={handleChange2}
                                 placeholder='Описание к заказу'
                                 style={{
