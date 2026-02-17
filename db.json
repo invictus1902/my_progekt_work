@@ -2365,5 +2365,264 @@
         }
       ]
     }
+  ],
+  "order": [
+    {
+      "id": 1,
+      "name_client": "Ариф Лиров",
+      "name_compony": "ООО \"Мебельный Стиль\"",
+      "address": "Город-Бишкек улица-Слоботская дом-293",
+      "order_note": "После готовности заказа сделать доставку когда позвонит клиент",
+      "description_for_order": "Фурнитуру цвета графит . Цвет столов и фасадов белый . Каркас дуб санома",
+      "order_color": "Дуб-Санома",
+      "product_order": [
+        {
+          "id": 7,
+          "img": "utilse/тумбачка маленькая.jpg",
+          "title": "Тумба маленькая",
+          "description": "фасады белого цвета",
+          "variables": [
+            {
+              "name": "shirina",
+              "label": "Ширина",
+              "default": 800
+            },
+            {
+              "name": "glubina",
+              "label": "Глубина",
+              "default": 400
+            },
+            {
+              "name": "visota",
+              "label": "Высота",
+              "default": 750
+            },
+            {
+              "name": "coll",
+              "label": "Количество",
+              "default": 1
+            }
+          ],
+          "conditions": [],
+          "details": [
+            {
+              "key": "kryshka",
+              "label": "крышка",
+              "formula_width": "shirina",
+              "formula_height": "glubina + 16",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "bok",
+              "label": "бок",
+              "formula_width": "glubina",
+              "formula_height": "visota - 16",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "carga",
+              "label": "царга",
+              "formula_width": "shirina - 32",
+              "formula_height": "70",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "polca_dno",
+              "label": "полка + дно",
+              "formula_width": "shirina - 32",
+              "formula_height": "glubina - 16",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "zadnay_stenka",
+              "label": "задняя стенка",
+              "formula_width": "shirina - 32",
+              "formula_height": "visota - 16",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "yashik_dlina",
+              "label": "ящик",
+              "formula_width": "450",
+              "formula_height": "100",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "yashik_shirina",
+              "label": "ящик",
+              "formula_width": "shirina - 88",
+              "formula_height": "100",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "fasad",
+              "label": "фасад",
+              "formula_width": "148",
+              "formula_height": "shirina - 2",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "dveri",
+              "label": "двери",
+              "formula_width": "shirina - 2",
+              "formula_height": "visota - 240",
+              "count_formula": "coll * 1"
+            }
+          ],
+          "details_statik": [],
+          "price": "7500"
+        },
+        {
+          "id": 8,
+          "img": "utilse/шкаф полка.jpg",
+          "title": "Шкаф полка закрытый",
+          "description": "",
+          "variables": [
+            {
+              "name": "shirina",
+              "label": "Ширина",
+              "default": 800
+            },
+            {
+              "name": "glubina",
+              "label": "Глубина",
+              "default": 400
+            },
+            {
+              "name": "visota",
+              "label": "Высота",
+              "default": 2000
+            },
+            {
+              "name": "coll",
+              "label": "Количество",
+              "default": 1
+            }
+          ],
+          "conditions": [],
+          "details": [
+            {
+              "key": "kryshka",
+              "label": "крышка",
+              "formula_width": "shirina",
+              "formula_height": "glubina + 16",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "bok",
+              "label": "бок",
+              "formula_width": "glubina",
+              "formula_height": "visota - 16",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "carga",
+              "label": "царга",
+              "formula_width": "shirina - 32",
+              "formula_height": "70",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "polca_dno",
+              "label": "полка + дно",
+              "formula_width": "shirina - 32",
+              "formula_height": "glubina",
+              "count_formula": "coll * 5"
+            },
+            {
+              "key": "dveri",
+              "label": "двери",
+              "formula_width": "(shirina / 2) - 4",
+              "formula_height": "visota - 90",
+              "count_formula": "coll * 2"
+            }
+          ],
+          "details_statik": [],
+          "price": "12000"
+        },
+        {
+          "id": 9,
+          "img": "utilse/Шкаф для одежды с перегородкой по центру.jpg",
+          "title": "Шкаф для одежды с перегородкой по центру",
+          "description": "добавить по еще одной полке снизу",
+          "variables": [
+            {
+              "name": "shirina",
+              "label": "Ширина",
+              "default": 800
+            },
+            {
+              "name": "glubina",
+              "label": "Глубина",
+              "default": 500
+            },
+            {
+              "name": "visota",
+              "label": "Высота",
+              "default": 2000
+            },
+            {
+              "name": "coll",
+              "label": "Количество",
+              "default": 1
+            }
+          ],
+          "conditions": [],
+          "details": [
+            {
+              "key": "kryshka",
+              "label": "крышка",
+              "formula_width": "shirina",
+              "formula_height": "glubina + 16",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "bok",
+              "label": "бок",
+              "formula_width": "glubina",
+              "formula_height": "visota - 16",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "carga",
+              "label": "царга",
+              "formula_width": "shirina - 32",
+              "formula_height": "70",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "peregorodka",
+              "label": "перегородка",
+              "formula_width": "glubina",
+              "formula_height": "visota - 102",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "polka",
+              "label": "полка",
+              "formula_width": "(shirina / 2) - 24",
+              "formula_height": "glubina",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "dno",
+              "label": "дно",
+              "formula_width": "shirina - 32",
+              "formula_height": "glubina",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "dveri",
+              "label": "двери",
+              "formula_width": "(shirina / 2) - 4",
+              "formula_height": "visota - 90",
+              "count_formula": "coll * 2"
+            }
+          ],
+          "details_statik": [],
+          "price": "1300"
+        }
+      ]
+    }
   ]
 }
