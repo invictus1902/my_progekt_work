@@ -102,9 +102,7 @@ const PlacingAnOrder = () => {
             id: `ITEM-${Date.now().toString().slice(-4)}`,
             productId: selectedProduct.id,
             title: selectedProduct.title,
-            img: selectedProduct.img.startsWith('http')
-                ? selectedProduct.img
-                : `http://localhost:8080${selectedProduct.img}`,
+            img: selectedProduct.img,
             customDescription,
             userInputs: { ...inputs },
             calculatedDetails: result.details || [],
@@ -319,7 +317,7 @@ const PlacingAnOrder = () => {
                 <div className="placing_an_order__list">
                     {order.items.map(item => (
                         <article key={item.id} className="placing_an_order__item-card">
-                            <img src={item.img} alt={item.title} />
+                            <img src={item.img} alt={item.img} />
                             <div className="placing_an_order__item-details">
                                 <h4>{item.title}</h4>
                                 <p><span>Размеры:</span> {item.calculatedDetails.map(d => d.size).join(', ')}</p>
