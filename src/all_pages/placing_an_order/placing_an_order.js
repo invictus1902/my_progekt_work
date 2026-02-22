@@ -1,43 +1,29 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { evaluate } from 'mathjs'; // ← УСТАНОВИ: npm i mathjs
-import { useNavigate } from 'react-router-dom'; // для редиректа
+import React, { useState, useEffect } from 'react';
+import { evaluate } from 'mathjs';
+import { useNavigate } from 'react-router-dom';
 import './placing_an_order.scss';
 
 const PlacingAnOrder = () => {
     const navigate = useNavigate();
 
-    // Полный заказ (состояние)
+    // Начальное состояние — полностью пустое, без моков
     const [order, setOrder] = useState({
-        id: `ORD-${Date.now().toString().slice(-6)}`,
-        status: 'draft',
-        createdAt: new Date().toISOString(),
-        customer: {
-            name: 'Ариф Лиров',
-            company: 'ООО "Мебельный Стиль"',
-            address: 'Город-Бишкек улица-Слоботская дом-293',
-            phone: '+996 999 12-45-67',
-            email: 'arif@mebel.kg'
-        },
-        orderColor: 'Дуб-Санома',
-        notes: 'После готовности заказа сделать доставку когда позвонит клиент',
-        description: 'Фурнитуру цвета графит . Цвет столов и фасадов белый . Каркас дуб санома',
-        items: [
-            // начальные из твоего примера
-        ],
-        subtotal: 0,
-        discountPercent: 0,
-        discountAmount: 0,
-        taxPercent: 0,
-        taxAmount: 0,
-        total: 0
+        name_client: '',
+        name_compony: '',
+        address: '',
+        phone: '',
+        email: '',
+        order_color: '',
+        order_note: '',
+        description_for_order: '',
+        items: [] // сюда добавляем мебель
     });
 
-    // Модалка
     const [modalOpen, setModalOpen] = useState(false);
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [inputs, setInputs] = useState({});
-    const [customDescription, setCustomDescription] = useState(''); // ← НОВОЕ
+    const [customDescription, setCustomDescription] = useState('');
     const [result, setResult] = useState({});
 
     // Загрузка каталога
@@ -45,10 +31,10 @@ const PlacingAnOrder = () => {
         fetch('http://localhost:8080/product')
             .then(res => res.json())
             .then(data => setProducts(Array.isArray(data) ? data : [data]))
-            .catch(console.error);
+            .catch(err => console.error('Ошибка каталога:', err));
     }, []);
 
-    // Инициализация inputs при выборе продукта
+    // Инициализация полей для выбранной мебели
     useEffect(() => {
         if (!selectedProduct) return;
         const init = {};
@@ -61,13 +47,11 @@ const PlacingAnOrder = () => {
         setResult({});
     }, [selectedProduct]);
 
-    // Расчёт деталей (копия из Catalog)
+    // Расчёт деталей (возвращает сразу)
     const calculate = () => {
-        if (!selectedProduct) return;
+        if (!selectedProduct) return [];
         const nums = { ...inputs };
-        (selectedProduct.variables || []).forEach(v => {
-            nums[v.name] = Number(inputs[v.name]) || v.default;
-        });
+        (selectedProduct.variables || []).forEach(v => nums[v.name] = Number(inputs[v.name]) || v.default);
         (selectedProduct.conditions || []).forEach(c => {
             if (c.type === 'flag') nums[c.name] = !!inputs[c.name];
         });
@@ -79,50 +63,41 @@ const PlacingAnOrder = () => {
                 const h = detail.formula_height ? evaluate(detail.formula_height, nums) : null;
                 const cnt = evaluate(detail.count_formula || '1', nums);
                 const size = h ? `${Math.round(w)} × ${Math.round(h)}` : Math.round(w);
-                return {
-                    key: detail.key,
-                    label: detail.label,
-                    size: `${size} мм`,
-                    count: Math.round(cnt)
-                };
+                return { key: detail.key, label: detail.label, size: `${size} мм`, count: Math.round(cnt) };
             } catch (e) {
                 return { key: detail.key, label: detail.label, size: 'Ошибка', count: 0 };
             }
         }).filter(Boolean);
 
         setResult({ details: calcDetails });
+        return calcDetails;
     };
 
-    // Добавление в заказ
+    // Добавление позиции
     const addToOrder = () => {
         if (!selectedProduct) return;
-        calculate(); // ← пересчёт
+        const calcDetails = calculate();
 
         const newItem = {
-            id: `ITEM-${Date.now().toString().slice(-4)}`,
             productId: selectedProduct.id,
             title: selectedProduct.title,
             img: selectedProduct.img,
-            customDescription,
+            description: customDescription,
+            variables: selectedProduct.variables,
+            conditions: selectedProduct.conditions,
+            details: selectedProduct.details,
             userInputs: { ...inputs },
-            calculatedDetails: result.details || [],
+            calculatedDetails: calcDetails,
+            price: selectedProduct.price || '0',
             quantity: Number(inputs.coll) || 1,
-            unitPrice: Number(selectedProduct.price) || 0,
-            totalPrice: (Number(selectedProduct.price) || 0) * (Number(inputs.coll) || 1)
+            totalPrice: Number(selectedProduct.price || 0) * (Number(inputs.coll) || 1)
         };
 
-        setOrder(prev => {
-            const newItems = [...prev.items, newItem];
-            const subtotal = newItems.reduce((sum, i) => sum + i.totalPrice, 0);
-            return {
-                ...prev,
-                items: newItems,
-                subtotal,
-                total: subtotal // пока без скидок/НДС
-            };
-        });
+        setOrder(prev => ({
+            ...prev,
+            items: [...prev.items, newItem]
+        }));
 
-        // Сброс модалки
         setModalOpen(false);
         setSelectedProduct(null);
         setInputs({});
@@ -131,37 +106,67 @@ const PlacingAnOrder = () => {
 
     // Удаление позиции
     const removeItem = (itemId) => {
-        setOrder(prev => {
-            const newItems = prev.items.filter(i => i.id !== itemId);
-            const subtotal = newItems.reduce((sum, i) => sum + i.totalPrice, 0);
-            return { ...prev, items: newItems, subtotal, total: subtotal };
-        });
-    };
-
-    // Обработчики инпутов (клиент)
-    const handleCustomerChange = (field, value) => {
         setOrder(prev => ({
             ...prev,
-            customer: { ...prev.customer, [field]: value }
+            items: prev.items.filter(i => i.productId !== itemId) // используем productId как уникальный ключ
         }));
     };
 
-    const handleOrderChange = (field, value) => {
+    // Обработчики полей заказа
+    const handleChange = (field, value) => {
         setOrder(prev => ({ ...prev, [field]: value }));
     };
 
-    // Сохранение заказа (пока лог, потом fetch)
+    // Отправка на сервер
     const saveOrder = (asDraft = false) => {
-        const finalOrder = { ...order, status: asDraft ? 'draft' : 'confirmed' };
-        console.log('🚀 ЗАКАЗ ГОТОВ К ОТПРАВКЕ:', finalOrder); // ← Замени на fetch POST /orders
-        // fetch('http://localhost:8080/orders', { method: 'POST', body: JSON.stringify(finalOrder) });
-        if (!asDraft) navigate(`/orders/${order.id}`); // ← редирект в редактор
+        if (order.items.length === 0) {
+            alert('Добавьте хотя бы одну позицию');
+            return;
+        }
+
+        const payload = {
+            name_client: order.name_client,
+            name_compony: order.name_compony,
+            address: order.address,
+            order_note: order.order_note,
+            description_for_order: order.description_for_order,
+            order_color: order.order_color,
+            product_order: order.items.map(item => ({
+                id: item.productId,
+                img: item.img,
+                title: item.title,
+                description: item.description,
+                variables: item.variables,
+                conditions: item.conditions,
+                details: item.details,
+                price: item.price,
+                userInputs: item.userInputs,
+                calculatedDetails: item.calculatedDetails
+            }))
+        };
+
+        fetch('http://localhost:8080/order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('Ошибка сервера: ' + res.status);
+                return res.json();
+            })
+            .then(data => {
+                const createdId = data.id || data[0]?.id; // сервер может вернуть массив или объект
+                alert(asDraft ? 'Черновик сохранён' : 'Заказ оформлен!');
+                if (!asDraft && createdId) {
+                    navigate(`/order/${createdId}`);
+                }
+            })
+            .catch(err => alert('Ошибка сохранения: ' + err.message));
     };
 
     return (
         <section className="placing_an_order">
             <div className="placing_an_order__content">
-                {/* Основная инфа (с новыми полями) */}
                 <article className="placing_an_order__info-card">
                     <h2 className="placing_an_order__section-title">Основная информация о заказе</h2>
                     <p className="placing_an_order__section-subtitle">Введите данные контрагента для формирования договора</p>
@@ -169,74 +174,45 @@ const PlacingAnOrder = () => {
                     <div className="placing_an_order__fields">
                         <label className="placing_an_order__field">
                             <span>ФИО Клиента / Представителя</span>
-                            <input
-                                type="text"
-                                value={order.customer.name}
-                                onChange={e => handleCustomerChange('name', e.target.value)}
-                            />
+                            <input type="text" value={order.name_client} onChange={e => handleChange('name_client', e.target.value)} />
                         </label>
                         <label className="placing_an_order__field">
                             <span>Название компании</span>
-                            <input
-                                type="text"
-                                value={order.customer.company}
-                                onChange={e => handleCustomerChange('company', e.target.value)}
-                            />
+                            <input type="text" value={order.name_compony} onChange={e => handleChange('name_compony', e.target.value)} />
                         </label>
                         <label className="placing_an_order__field">
                             <span>Адрес доставки</span>
-                            <input
-                                type="text"
-                                value={order.customer.address}
-                                onChange={e => handleCustomerChange('address', e.target.value)}
-                            />
+                            <input type="text" value={order.address} onChange={e => handleChange('address', e.target.value)} />
                         </label>
                         <label className="placing_an_order__field">
                             <span>Телефон клиента</span>
-                            <input
-                                type="tel"
-                                value={order.customer.phone}
-                                onChange={e => handleCustomerChange('phone', e.target.value)}
-                            />
+                            <input type="tel" value={order.phone} onChange={e => handleChange('phone', e.target.value)} />
                         </label>
                         <label className="placing_an_order__field">
                             <span>Email клиента</span>
-                            <input
-                                type="email"
-                                value={order.customer.email}
-                                onChange={e => handleCustomerChange('email', e.target.value)}
-                            />
+                            <input type="email" value={order.email} onChange={e => handleChange('email', e.target.value)} />
                         </label>
                         <label className="placing_an_order__field">
                             <span>Цвет материала</span>
-                            <input
-                                type="text"
-                                value={order.orderColor}
-                                onChange={e => handleOrderChange('orderColor', e.target.value)}
-                            />
+                            <input type="text" value={order.order_color} onChange={e => handleChange('order_color', e.target.value)} />
                         </label>
                         <label className="placing_an_order__field">
                             <span>Примечание к заказу</span>
-                            <textarea value={order.notes} onChange={e => handleOrderChange('notes', e.target.value)} />
+                            <textarea value={order.order_note} onChange={e => handleChange('order_note', e.target.value)} />
                         </label>
                         <label className="placing_an_order__field">
                             <span>Описание к заказу</span>
-                            <textarea value={order.description} onChange={e => handleOrderChange('description', e.target.value)} />
+                            <textarea value={order.description_for_order} onChange={e => handleChange('description_for_order', e.target.value)} />
                         </label>
                     </div>
                 </article>
 
-                {/* Кнопка добавить */}
                 <div className="placing_an_order__add-wrap">
-                    <button
-                        className="placing_an_order__add-button"
-                        onClick={() => setModalOpen(true)}
-                    >
+                    <button className="placing_an_order__add-button" onClick={() => setModalOpen(true)}>
                         <span>＋</span> Добавить мебель в заказ
                     </button>
                 </div>
 
-                {/* МОДАЛКА (полная) */}
                 {modalOpen && (
                     <div className="modal-overlay" onClick={() => setModalOpen(false)}>
                         <div className="modal-content" onClick={e => e.stopPropagation()}>
@@ -247,11 +223,7 @@ const PlacingAnOrder = () => {
 
                             <div className="modal-products-grid">
                                 {products.map(p => (
-                                    <div
-                                        key={p.id}
-                                        className={`modal-product-card ${selectedProduct?.id === p.id ? 'active' : ''}`}
-                                        onClick={() => setSelectedProduct(p)}
-                                    >
+                                    <div key={p.id} className={`modal-product-card ${selectedProduct?.id === p.id ? 'active' : ''}`} onClick={() => setSelectedProduct(p)}>
                                         <img src={p.img} alt={p.title} />
                                         <p>{p.title}</p>
                                     </div>
@@ -262,17 +234,16 @@ const PlacingAnOrder = () => {
                                 <div className="modal-form">
                                     <h4>{selectedProduct.title}</h4>
 
-                                    {/* Инпуты размеров */}
                                     <div className="modal-inputs">
                                         {(selectedProduct.variables || []).map(v => (
                                             <label key={v.name} className="modal-field">
                                                 <span>{v.label}</span>
                                                 <input
                                                     type="number"
-                                                    value={inputs[v.name] ?? ''}
+                                                    value={inputs[v.name] ?? v.default}
                                                     onChange={e => {
                                                         setInputs(prev => ({ ...prev, [v.name]: e.target.value }));
-                                                        setResult({}); // сброс результата
+                                                        setResult({});
                                                     }}
                                                 />
                                             </label>
@@ -281,7 +252,7 @@ const PlacingAnOrder = () => {
                                             <label key={c.name} className="modal-checkbox">
                                                 <input
                                                     type="checkbox"
-                                                    checked={!!inputs[c.name]}
+                                                    checked={inputs[c.name] ?? false}
                                                     onChange={() => setInputs(prev => ({ ...prev, [c.name]: !prev[c.name] }))}
                                                 />
                                                 {c.label}
@@ -289,7 +260,6 @@ const PlacingAnOrder = () => {
                                         ))}
                                     </div>
 
-                                    {/* НОВОЕ: Описание позиции */}
                                     <label className="modal-field" style={{ gridColumn: '1 / -1' }}>
                                         <span>Описание позиции (опционально)</span>
                                         <textarea
@@ -308,7 +278,6 @@ const PlacingAnOrder = () => {
                     </div>
                 )}
 
-                {/* Состав заказа */}
                 <div className="placing_an_order__title-row">
                     <h3>Состав заказа ({order.items.length})</h3>
                     <p>Всего позиций: <strong>{order.items.length} шт.</strong></p>
@@ -317,18 +286,15 @@ const PlacingAnOrder = () => {
                 <div className="placing_an_order__list">
                     {order.items.map(item => (
                         <article key={item.id} className="placing_an_order__item-card">
-                            <img src={item.img} alt={item.img} />
+                            <img src={item.img} alt={item.title} />
                             <div className="placing_an_order__item-details">
                                 <h4>{item.title}</h4>
+                                <p><span>Описание:</span> {item.description}</p>
                                 <p><span>Размеры:</span> {item.calculatedDetails.map(d => d.size).join(', ')}</p>
-                                <p><span>Цена:</span> {item.totalPrice} сом</p> {/* ← ЦЕНА ИЗ ДИЗАЙНА */}
+                                <p><span>Цена:</span> {item.totalPrice} сом</p>
                                 <div className="placing_an_order__item-actions">
-                                    <button type="button">Изм.</button> {/* ← Позже сделаем модалку редакта */}
-                                    <button
-                                        type="button"
-                                        className="placing_an_order__delete"
-                                        onClick={() => removeItem(item.id)}
-                                    >
+                                    <button type="button">Изм.</button>
+                                    <button type="button" className="placing_an_order__delete" onClick={() => removeItem(item.productId)}>
                                         Удал.
                                     </button>
                                 </div>
@@ -337,18 +303,11 @@ const PlacingAnOrder = () => {
                     ))}
                 </div>
 
-                {/* Футер */}
                 <div className="placing_an_order__footer-actions">
-                    <button
-                        className="placing_an_order__draft"
-                        onClick={() => saveOrder(true)}
-                    >
+                    <button className="placing_an_order__draft" onClick={() => saveOrder(true)}>
                         Сохранить как черновик
                     </button>
-                    <button
-                        className="placing_an_order__submit"
-                        onClick={() => saveOrder(false)}
-                    >
+                    <button className="placing_an_order__submit" onClick={() => saveOrder(false)}>
                         Оформить заказ
                     </button>
                 </div>

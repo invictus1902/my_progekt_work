@@ -17,23 +17,19 @@ app.use(express.json());
 // Секрет для JWT
 const JWT_SECRET = 'your-secret-key';
 
-// Папка для фото (вне public, чтобы избежать перезагрузки React)
+// Папка для фото
 const uploadDir = path.join(__dirname, 'uploads');
-
-// Проверка и создание папки uploads
 if (fs.existsSync(uploadDir)) {
     const stat = fs.statSync(uploadDir);
     if (!stat.isDirectory()) {
-        console.log('Путь uploads занят файлом. Удаляем и создаем папку...');
         fs.unlinkSync(uploadDir);
         fs.mkdirSync(uploadDir, { recursive: true });
     }
 } else {
-    console.log('Создаем папку uploads...');
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Multer — оригинальное имя
+// Multer
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, uploadDir);
@@ -42,19 +38,18 @@ const storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 });
-
 const upload = multer({ storage });
 
 // База данных
 const adapter = new JSONFileSync('db.json');
-const db = new LowSync(adapter, { product: [], users: [], workSessions: [] });
+const db = new LowSync(adapter, { product: [], users: [], workSessions: [], order: [] }); // добавил order
 db.read();
 db.write();
 
-// Раздаем статику из корня через виртуальный путь /utilse
+// Раздача фото
 app.use('/utilse', express.static(uploadDir));
 
-// Middleware аутентификации (закомментирован)
+// Аутентификация (закомментирована)
 const authenticate = (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) return res.status(401).json({ error: 'No token provided' });
@@ -68,8 +63,8 @@ const authenticate = (req, res, next) => {
     }
 };
 
-// Routes — без аутентификации
-const collections = ['product', 'users', 'workSessions'];
+// Routes для всех коллекций
+const collections = ['product', 'users', 'workSessions', 'order']; // добавил 'order'
 
 collections.forEach(collection => {
     app.get(`/${collection}`, (req, res) => {
@@ -82,7 +77,8 @@ collections.forEach(collection => {
     });
 
     app.post(`/${collection}`, (req, res) => {
-        const newItem = { ...req.body, id: (db.data[collection].length || 0) + 1 }; // Авто id
+        const newItem = { ...req.body, id: (db.data[collection]?.length || 0) + 1 };
+        db.data[collection] = db.data[collection] || [];
         db.data[collection].push(newItem);
         db.write();
         res.json(newItem);
@@ -91,9 +87,9 @@ collections.forEach(collection => {
     app.put(`/${collection}/:id`, (req, res) => {
         const index = db.data[collection].findIndex(i => i.id === Number(req.params.id));
         if (index !== -1) {
-            db.data[collection][index] = req.body;
+            db.data[collection][index] = { ...db.data[collection][index], ...req.body };
             db.write();
-            res.json(req.body);
+            res.json(db.data[collection][index]);
         } else {
             res.status(404).json({ error: 'Не найдено' });
         }
@@ -129,7 +125,7 @@ app.post('/login', (req, res) => {
     }
 });
 
-// Загрузка фото с детальной обработкой ошибок
+// Загрузка фото
 app.post('/upload', (req, res) => {
     upload.single('file')(req, res, (err) => {
         if (err instanceof multer.MulterError) {
