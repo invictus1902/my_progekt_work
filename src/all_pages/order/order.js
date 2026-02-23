@@ -183,7 +183,7 @@ const Order = () => {
                 <div className="placing_an_order__list">
                     {order.product_order.map(item => (
                         <article key={item.id} className="placing_an_order__item-card">
-                            <img src={item.img} alt={item.title} />
+                            <img src={"../" + item.img} alt={item.title} />
                             <div className="placing_an_order__item-details">
                                 <h4>{item.title}</h4>
                                 <p><span>Описание:</span> {item.description}</p>
