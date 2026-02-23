@@ -1,197 +1,166 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { useParams } from 'react-router-dom';
-import { evaluate } from 'mathjs';
 import './order.scss';
 
 const Order = () => {
     const { id } = useParams();
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [showDetailsForItem, setShowDetailsForItem] = useState(null);
+    const [error, setError] = useState(null);
+    const [expanded, setExpanded] = useState(null);
 
     useEffect(() => {
         fetch(`http://localhost:8080/order/${id}`)
             .then(res => res.json())
             .then(data => {
-                const loadedOrder = data.order?.[0] || data; // если массив или объект
-                // Рассчитываем calculatedDetails, если их нет
-                loadedOrder.product_order = loadedOrder.product_order.map(item => {
-                    if (!item.calculatedDetails || item.calculatedDetails.length === 0) {
+                const loaded = data.order?.[0] || data;
+
+                loaded.product_order = (loaded.product_order || []).map(item => {
+                    if (!item.calculatedDetails?.length) {
                         const nums = item.userInputs || {};
-                        const calcDetails = (item.details || []).map(detail => {
-                            if (detail.if_condition && !nums[detail.if_condition]) return null;
+                        const details = (item.details || []).map(d => {
+                            if (d.if_condition && !nums[d.if_condition]) return null;
                             try {
-                                const w = evaluate(detail.formula_width || '0', nums);
-                                const h = detail.formula_height ? evaluate(detail.formula_height, nums) : null;
-                                const cnt = evaluate(detail.count_formula || '1', nums);
-                                const size = h ? `${Math.round(w)} × ${Math.round(h)}` : Math.round(w);
-                                return { key: detail.key, label: detail.label, size: `${size} мм`, count: Math.round(cnt) };
-                            } catch (e) {
-                                return { key: detail.key, label: detail.label, size: 'Ошибка', count: 0 };
+                                const w = nums[d.formula_width] || 0;
+                                const h = d.formula_height ? nums[d.formula_height] : null;
+                                const cnt = nums[d.count_formula] || 1;
+                                const size = h ? `${Math.round(w)} × ${Math.round(h)} мм` : `${Math.round(w)} мм`;
+                                return { key: d.key, label: d.label, size, count: Math.round(cnt) };
+                            } catch {
+                                return { key: d.key, label: d.label, size: 'Ошибка', count: 0 };
                             }
                         }).filter(Boolean);
-                        return { ...item, calculatedDetails: calcDetails };
+                        return { ...item, calculatedDetails: details };
                     }
                     return item;
                 });
 
-                setOrder(recalculateTotals(loadedOrder));
+                const subtotal = loaded.product_order.reduce((s, p) => {
+                    return s + Number(p.price || 0) * (Number(p.userInputs?.coll || 1) || 1);
+                }, 0);
+
+                setOrder({ ...loaded, subtotal, total: subtotal });
                 setLoading(false);
             })
             .catch(err => {
-                console.error('Ошибка загрузки заказа:', err);
+                setError('Не удалось загрузить заказ');
                 setLoading(false);
             });
     }, [id]);
 
-    const recalculateTotals = (ord) => {
-        const items = ord.product_order || [];
-        const subtotal = items.reduce((sum, item) => {
-            return sum + (Number(item.price || 0) * (Number(item.userInputs?.coll || 1) || 1));
-        }, 0);
-
-        const discountAmount = subtotal * ((ord.discountPercent || 0) / 100);
-        const taxable = subtotal - discountAmount;
-        const taxAmount = taxable * ((ord.taxPercent || 0) / 100);
-        const total = taxable + taxAmount;
-
-        return { ...ord, subtotal, discountAmount, taxAmount, total };
-    };
-
-    const handleChange = (field, value) => {
-        setOrder(prev => recalculateTotals({ ...prev, [field]: value }));
-    };
-
-    const handleCustomerChange = (field, value) => {
-        setOrder(prev => recalculateTotals({
-            ...prev,
-            [field === 'name' ? 'name_client' : 'name_compony']: value
-        }));
-    };
-
-    const handleStatusChange = (e) => {
-        setOrder(prev => ({ ...prev, status: e.target.value }));
-    };
-
-    const saveChanges = () => {
-        fetch(`http://localhost:8080/order/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(order)
-        })
-            .then(res => res.json())
-            .then(() => alert('Изменения сохранены!'))
-            .catch(err => console.error('Ошибка сохранения:', err));
-    };
-
-    const exportSpecification = () => {
+    const exportSpec = () => {
+        if (!order) return;
         const doc = new jsPDF();
-        doc.setFontSize(14);
-        doc.text('СПЕЦИФИКАЦИЯ №1', 105, 15, { align: 'center' });
-        doc.setFontSize(10);
-        doc.text(`К договору № ${order.id} от ${new Date(order.createdAt || Date.now()).toLocaleDateString('ru-RU')}`, 105, 25, { align: 'center' });
 
-        const tableData = order.product_order.map((item, idx) => [
-            idx + 1,
-            item.title,
-            'шт',
-            item.userInputs?.coll || 1,
-            item.price,
-            Number(item.price) * (item.userInputs?.coll || 1)
+        doc.setFontSize(18);
+        doc.text(`Спецификация №${order.id}`, 105, 20, { align: 'center' });
+
+        doc.setFontSize(12);
+        doc.text(`Дата: ${new Date().toLocaleDateString('ru-RU')}`, 105, 30, { align: 'center' });
+
+        const table = order.product_order.map((p, i) => [
+            i + 1,
+            p.title,
+            p.userInputs?.coll || 1,
+            Number(p.price).toLocaleString(),
+            (Number(p.price) * (p.userInputs?.coll || 1)).toLocaleString()
         ]);
 
         doc.autoTable({
-            head: [['№', 'Наименование продукта', 'Ед.измер.', 'Кол-во', 'Цена за ед.', 'Сумма']],
-            body: tableData,
-            startY: 35,
+            head: [['№', 'Позиция', 'Кол-во', 'Цена', 'Сумма']],
+            body: table,
+            startY: 45,
             theme: 'grid',
             headStyles: { fillColor: [59, 130, 246] },
-            styles: { fontSize: 9, cellPadding: 3 }
+            styles: { fontSize: 10, cellPadding: 4 }
         });
 
-        const finalY = doc.lastAutoTable.finalY + 10;
-        doc.setFontSize(12);
-        doc.text(`ИТОГО К ОПЛАТЕ: ${order.total || 0} сом`, 10, finalY);
+        const y = doc.lastAutoTable.finalY + 20;
+        doc.setFontSize(14);
+        doc.text(`ИТОГО: ${order.total?.toLocaleString() || 0} сом`, 105, y, { align: 'center' });
 
-        doc.save(`specification_${order.id}.pdf`);
+        doc.save(`spec_${order.id}.pdf`);
     };
 
     const exportContract = () => {
+        if (!order) return;
         const doc = new jsPDF();
-        doc.setFontSize(14);
-        doc.text(`ДОГОВОР № ${order.id}`, 105, 15, { align: 'center' });
-        doc.setFontSize(10);
-        doc.text(`${new Date().toLocaleDateString('ru-RU')} г. Токмок`, 140, 25);
-
-        let y = 35;
-        doc.text('ОсОО «Токмокское УПП КОС и КОГ», именуемая в дальнейшем «Поставщик» в лице директора Турбатова Саламата Адылбековича, действующего на основании Устава, с одной стороны', 10, y, { maxWidth: 180 });
-        y += 10;
-        doc.text(`${order.name_compony}, в лице ${order.name_client} именуемый в дальнейшем «Покупатель» действующего на основании Положения, заключили настоящий договор согласно закона Кыргызской Республики №27 от 14 апреля 2022 года «О государственных закупках» статья 17, часть 3, пункт 12. Методом из одного источника.`, 10, y, { maxWidth: 180 });
-        // Добавь остальной текст договора из DOCX по аналогии
-
-        y += 30;
-        doc.text('Общая сумма договора: ' + (order.total || 0) + ' сом', 10, y);
-
+        doc.setFontSize(18);
+        doc.text(`Договор №${order.id}`, 105, 20, { align: 'center' });
+        // Добавь текст договора, если нужно
+        doc.setFontSize(12);
+        doc.text(`Сумма: ${order.total?.toLocaleString() || 0} сом`, 20, 60);
         doc.save(`contract_${order.id}.pdf`);
     };
 
-    if (loading) return <div>Загрузка заказа...</div>;
-    if (!order) return <div>Заказ не найден</div>;
+    if (loading) return <div className="loading">Загрузка...</div>;
+    if (error) return <div className="error">{error}</div>;
+    if (!order) return <div className="empty">Заказ не найден</div>;
 
     return (
-        <section className="placing_an_order">
-            <div className="placing_an_order__content">
-                <h1>Заказ № {order.id}</h1>
+        <div className="order-page">
+            <header className="order-header">
+                <h1>Заказ №{order.id}</h1>
+                <div className="status-badge">{order.status || 'Оформлен'}</div>
+            </header>
 
-                <article className="placing_an_order__info-card">
-                    <h2>Информация о заказе</h2>
-                    <div className="placing_an_order__fields">
-                        <label className="placing_an_order__field">
-                            <span>ФИО Клиента</span>
-                            <input value={order.name_client} onChange={e => handleCustomerChange('name', e.target.value)} />
-                        </label>
-                        <label className="placing_an_order__field">
-                            <span>Название компании</span>
-                            <input value={order.name_compony} onChange={e => handleCustomerChange('company', e.target.value)} />
-                        </label>
-                        <label className="placing_an_order__field">
-                            <span>Адрес доставки</span>
-                            <input value={order.address} onChange={e => handleChange('address', e.target.value)} />
-                        </label>
-                        <label className="placing_an_order__field">
-                            <span>Цвет материала</span>
-                            <input value={order.order_color} onChange={e => handleChange('order_color', e.target.value)} />
-                        </label>
-                        <label className="placing_an_order__field">
-                            <span>Примечание к заказу</span>
-                            <textarea value={order.order_note} onChange={e => handleChange('order_note', e.target.value)} />
-                        </label>
-                        <label className="placing_an_order__field">
-                            <span>Описание к заказу</span>
-                            <textarea value={order.description_for_order} onChange={e => handleChange('description_for_order', e.target.value)} />
-                        </label>
-                    </div>
-                </article>
-
-                <div className="placing_an_order__title-row">
-                    <h3>Состав заказа ({order.product_order.length})</h3>
-                    <p>Всего позиций: <strong>{order.product_order.length} шт.</strong></p>
+            <div className="order-info">
+                <div className="client-block">
+                    <h3>Клиент</h3>
+                    <p><strong>{order.name_client || '—'}</strong></p>
+                    {order.name_compony && <p>{order.name_compony}</p>}
+                    <p>Адрес: {order.address || '—'}</p>
+                    {order.order_note && <p className="note">Примечание: {order.order_note}</p>}
                 </div>
 
-                <div className="placing_an_order__list">
-                    {order.product_order.map(item => (
-                        <article key={item.id} className="placing_an_order__item-card">
-                            <img src={"../" + item.img} alt={item.title} />
-                            <div className="placing_an_order__item-details">
-                                <h4>{item.title}</h4>
-                                <p><span>Описание:</span> {item.description}</p>
-                                <p><span>Цена:</span> {item.price} сом × {item.userInputs?.coll || 1} = {Number(item.price) * (item.userInputs?.coll || 1)} сом</p>
-                                <button onClick={() => setShowDetailsForItem(item.id === showDetailsForItem ? null : item.id)}>
-                                    {item.id === showDetailsForItem ? 'Скрыть деталировку' : 'Показать деталировку'}
+                <div className="total-block">
+                    <h3>Итого</h3>
+                    <div className="total-line">
+                        <span>Сумма товаров</span>
+                        <strong>{order.subtotal?.toLocaleString() || 0} сом</strong>
+                    </div>
+                    <div className="total-line grand">
+                        <span>К оплате</span>
+                        <strong>{order.total?.toLocaleString() || 0} сом</strong>
+                    </div>
+                </div>
+            </div>
+
+            <section className="items-section">
+                <h2>Позиции ({order.product_order?.length || 0})</h2>
+
+                <div className="items-grid">
+                    {order.product_order?.map(item => (
+                        <div key={item.id} className="item-card">
+                            <div className="item-photo">
+                                <img
+                                    src={item.img?.startsWith('http') ? item.img : `/utilse/${item.img?.split('/').pop()}`}
+                                    alt={item.title}
+                                    onError={e => (e.target.src = '/utilse/placeholder.jpg')}
+                                />
+                            </div>
+
+                            <div className="item-body">
+                                <h3>{item.title}</h3>
+                                {item.description && <p className="desc">{item.description}</p>}
+
+                                <div className="item-price-row">
+                                    <span>{Number(item.price).toLocaleString()} сом × {item.userInputs?.coll || 1}</span>
+                                    <strong className="item-total">
+                                        {(Number(item.price) * (item.userInputs?.coll || 1)).toLocaleString()} сом
+                                    </strong>
+                                </div>
+
+                                <button
+                                    className="details-btn"
+                                    onClick={() => setExpanded(expanded === item.id ? null : item.id)}
+                                >
+                                    {expanded === item.id ? 'Скрыть детали' : 'Деталировка'}
                                 </button>
-                                {item.id === showDetailsForItem && (
+
+                                {expanded === item.id && item.calculatedDetails?.length > 0 && (
                                     <table className="details-table">
                                         <thead>
                                         <tr>
@@ -201,7 +170,7 @@ const Order = () => {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {item.calculatedDetails?.map(d => (
+                                        {item.calculatedDetails.map(d => (
                                             <tr key={d.key}>
                                                 <td>{d.label}</td>
                                                 <td>{d.size}</td>
@@ -212,23 +181,16 @@ const Order = () => {
                                     </table>
                                 )}
                             </div>
-                        </article>
+                        </div>
                     ))}
                 </div>
+            </section>
 
-                <div className="placing_an_order__footer-actions">
-                    <button className="placing_an_order__draft" onClick={saveChanges}>
-                        Сохранить изменения
-                    </button>
-                    <button className="placing_an_order__submit" onClick={exportSpecification}>
-                        Спецификация PDF
-                    </button>
-                    <button className="placing_an_order__submit" onClick={exportContract}>
-                        Договор PDF
-                    </button>
-                </div>
-            </div>
-        </section>
+            <footer className="order-footer">
+                <button className="btn btn-spec" onClick={exportSpec}>Спецификация PDF</button>
+                <button className="btn btn-contract" onClick={exportContract}>Договор PDF</button>
+            </footer>
+        </div>
     );
 };
 
