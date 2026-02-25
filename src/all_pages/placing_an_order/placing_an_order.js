@@ -298,7 +298,8 @@ const PlacingAnOrder = () => {
                                         Удал.
                                     </button>
                                 </div>
-                            </div>
+                            </div>+
+
                         </article>
                     ))}
                 </div>

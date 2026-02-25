@@ -24,7 +24,7 @@ function App() {
                     <Route path="catalog" element={<Catalog />} />
                     <Route path="/edit_mebel" element={<EditMebel />} />
                     <Route path="/placing_an_order" element={<PlacingAnOrder />} />
-                    <Route path="/order_editor" element={<OrderEditor />} /> {/* Если это другая страница */}
+                    <Route path="/order_editor/:id" element={<OrderEditor />} /> {/* Если это другая страница */}
                     <Route path="/view_orders" element={<View_orders />} />
                     <Route path="/order/:id" element={<Order />} /> {/* ← ИЗМЕНЕНО: с :id */}
                 </Route>

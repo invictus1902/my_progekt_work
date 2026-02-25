@@ -3184,7 +3184,10 @@
           ]
         }
       ],
-      "id": 3
+      "id": 3,
+      "status": "Пилится",
+      "subtotal": 0,
+      "total": 0
     },
     {
       "name_client": "qwert",
@@ -3991,6 +3994,439 @@
       "discountAmount": 0,
       "taxAmount": 0,
       "total": 30000
+    },
+    {
+      "name_client": "",
+      "name_compony": "",
+      "address": "",
+      "order_note": "",
+      "description_for_order": "",
+      "order_color": "",
+      "product_order": [
+        {
+          "id": 2,
+          "img": "utilse/двухтумбовый_стол.jpg",
+          "title": "Двухтумбовый стол",
+          "description": "",
+          "variables": [
+            {
+              "name": "shirina",
+              "label": "Ширина",
+              "default": 1600
+            },
+            {
+              "name": "glubina",
+              "label": "Глубина",
+              "default": 700
+            },
+            {
+              "name": "visota",
+              "label": "Высота",
+              "default": 750
+            },
+            {
+              "name": "tumbaStola",
+              "label": "Ширина тумбы",
+              "default": 400
+            },
+            {
+              "name": "coll",
+              "label": "Количество",
+              "default": 1
+            }
+          ],
+          "conditions": [
+            {
+              "name": "stoleshka",
+              "label": "Столешница",
+              "type": "flag",
+              "default": false
+            },
+            {
+              "name": "utolsh",
+              "label": "Утолщенка",
+              "type": "flag",
+              "default": false
+            }
+          ],
+          "details": [
+            {
+              "key": "stol",
+              "label": "стол",
+              "formula_width": "shirina",
+              "formula_height": "glubina",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "bok",
+              "label": "бок",
+              "formula_width": "glubina - 100",
+              "formula_height": "visota - 16",
+              "count_formula": "coll * 4"
+            },
+            {
+              "key": "carga",
+              "label": "царга",
+              "formula_width": "tumbaStola - 32",
+              "formula_height": "70",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "plashka",
+              "label": "планка",
+              "formula_width": "tumbaStola - 32",
+              "formula_height": "100",
+              "count_formula": "coll * 4"
+            },
+            {
+              "key": "polca_dno",
+              "label": "полка + дно",
+              "formula_width": "tumbaStola - 32",
+              "formula_height": "glubina - 116",
+              "count_formula": "coll * 4"
+            },
+            {
+              "key": "zadnay_stenka",
+              "label": "задняя стенка",
+              "formula_width": "tumbaStola - 32",
+              "formula_height": "visota - 16",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "yashik_dlina",
+              "label": "ящик",
+              "formula_width": "450",
+              "formula_height": "100",
+              "count_formula": "coll * 4"
+            },
+            {
+              "key": "yashik_shirina",
+              "label": "ящик",
+              "formula_width": "tumbaStola - 88",
+              "formula_height": "100",
+              "count_formula": "coll * 4"
+            },
+            {
+              "key": "cargaStol",
+              "label": "царга стола",
+              "formula_width": "shirina - 100 - (tumbaStola * 2)",
+              "formula_height": "500",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "fasad",
+              "label": "фасад",
+              "formula_width": "148",
+              "formula_height": "tumbaStola - 2",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "dveri",
+              "label": "двери",
+              "formula_width": "tumbaStola - 2",
+              "formula_height": "visota - 240",
+              "count_formula": "coll * 2"
+            }
+          ],
+          "price": "0",
+          "userInputs": {
+            "shirina": 1600,
+            "glubina": 700,
+            "visota": 750,
+            "tumbaStola": 400,
+            "coll": 1,
+            "stoleshka": false,
+            "utolsh": false
+          },
+          "calculatedDetails": [
+            {
+              "key": "stol",
+              "label": "стол",
+              "size": "1600 × 700 мм",
+              "count": 1
+            },
+            {
+              "key": "bok",
+              "label": "бок",
+              "size": "600 × 734 мм",
+              "count": 4
+            },
+            {
+              "key": "carga",
+              "label": "царга",
+              "size": "368 × 70 мм",
+              "count": 2
+            },
+            {
+              "key": "plashka",
+              "label": "планка",
+              "size": "368 × 100 мм",
+              "count": 4
+            },
+            {
+              "key": "polca_dno",
+              "label": "полка + дно",
+              "size": "368 × 584 мм",
+              "count": 4
+            },
+            {
+              "key": "zadnay_stenka",
+              "label": "задняя стенка",
+              "size": "368 × 734 мм",
+              "count": 2
+            },
+            {
+              "key": "yashik_dlina",
+              "label": "ящик",
+              "size": "450 × 100 мм",
+              "count": 4
+            },
+            {
+              "key": "yashik_shirina",
+              "label": "ящик",
+              "size": "312 × 100 мм",
+              "count": 4
+            },
+            {
+              "key": "cargaStol",
+              "label": "царга стола",
+              "size": "700 × 500 мм",
+              "count": 1
+            },
+            {
+              "key": "fasad",
+              "label": "фасад",
+              "size": "148 × 398 мм",
+              "count": 2
+            },
+            {
+              "key": "dveri",
+              "label": "двери",
+              "size": "398 × 510 мм",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      "id": 5
+    },
+    {
+      "name_client": "",
+      "name_compony": "",
+      "address": "",
+      "order_note": "",
+      "description_for_order": "",
+      "order_color": "",
+      "product_order": [
+        {
+          "id": 2,
+          "img": "utilse/двухтумбовый_стол.jpg",
+          "title": "Двухтумбовый стол",
+          "description": "",
+          "variables": [
+            {
+              "name": "shirina",
+              "label": "Ширина",
+              "default": 1600
+            },
+            {
+              "name": "glubina",
+              "label": "Глубина",
+              "default": 700
+            },
+            {
+              "name": "visota",
+              "label": "Высота",
+              "default": 750
+            },
+            {
+              "name": "tumbaStola",
+              "label": "Ширина тумбы",
+              "default": 400
+            },
+            {
+              "name": "coll",
+              "label": "Количество",
+              "default": 1
+            }
+          ],
+          "conditions": [
+            {
+              "name": "stoleshka",
+              "label": "Столешница",
+              "type": "flag",
+              "default": false
+            },
+            {
+              "name": "utolsh",
+              "label": "Утолщенка",
+              "type": "flag",
+              "default": false
+            }
+          ],
+          "details": [
+            {
+              "key": "stol",
+              "label": "стол",
+              "formula_width": "shirina",
+              "formula_height": "glubina",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "bok",
+              "label": "бок",
+              "formula_width": "glubina - 100",
+              "formula_height": "visota - 16",
+              "count_formula": "coll * 4"
+            },
+            {
+              "key": "carga",
+              "label": "царга",
+              "formula_width": "tumbaStola - 32",
+              "formula_height": "70",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "plashka",
+              "label": "планка",
+              "formula_width": "tumbaStola - 32",
+              "formula_height": "100",
+              "count_formula": "coll * 4"
+            },
+            {
+              "key": "polca_dno",
+              "label": "полка + дно",
+              "formula_width": "tumbaStola - 32",
+              "formula_height": "glubina - 116",
+              "count_formula": "coll * 4"
+            },
+            {
+              "key": "zadnay_stenka",
+              "label": "задняя стенка",
+              "formula_width": "tumbaStola - 32",
+              "formula_height": "visota - 16",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "yashik_dlina",
+              "label": "ящик",
+              "formula_width": "450",
+              "formula_height": "100",
+              "count_formula": "coll * 4"
+            },
+            {
+              "key": "yashik_shirina",
+              "label": "ящик",
+              "formula_width": "tumbaStola - 88",
+              "formula_height": "100",
+              "count_formula": "coll * 4"
+            },
+            {
+              "key": "cargaStol",
+              "label": "царга стола",
+              "formula_width": "shirina - 100 - (tumbaStola * 2)",
+              "formula_height": "500",
+              "count_formula": "coll * 1"
+            },
+            {
+              "key": "fasad",
+              "label": "фасад",
+              "formula_width": "148",
+              "formula_height": "tumbaStola - 2",
+              "count_formula": "coll * 2"
+            },
+            {
+              "key": "dveri",
+              "label": "двери",
+              "formula_width": "tumbaStola - 2",
+              "formula_height": "visota - 240",
+              "count_formula": "coll * 2"
+            }
+          ],
+          "price": "0",
+          "userInputs": {
+            "shirina": 1600,
+            "glubina": 700,
+            "visota": 750,
+            "tumbaStola": 400,
+            "coll": 1,
+            "stoleshka": false,
+            "utolsh": false
+          },
+          "calculatedDetails": [
+            {
+              "key": "stol",
+              "label": "стол",
+              "size": "1600 × 700 мм",
+              "count": 1
+            },
+            {
+              "key": "bok",
+              "label": "бок",
+              "size": "600 × 734 мм",
+              "count": 4
+            },
+            {
+              "key": "carga",
+              "label": "царга",
+              "size": "368 × 70 мм",
+              "count": 2
+            },
+            {
+              "key": "plashka",
+              "label": "планка",
+              "size": "368 × 100 мм",
+              "count": 4
+            },
+            {
+              "key": "polca_dno",
+              "label": "полка + дно",
+              "size": "368 × 584 мм",
+              "count": 4
+            },
+            {
+              "key": "zadnay_stenka",
+              "label": "задняя стенка",
+              "size": "368 × 734 мм",
+              "count": 2
+            },
+            {
+              "key": "yashik_dlina",
+              "label": "ящик",
+              "size": "450 × 100 мм",
+              "count": 4
+            },
+            {
+              "key": "yashik_shirina",
+              "label": "ящик",
+              "size": "312 × 100 мм",
+              "count": 4
+            },
+            {
+              "key": "cargaStol",
+              "label": "царга стола",
+              "size": "700 × 500 мм",
+              "count": 1
+            },
+            {
+              "key": "fasad",
+              "label": "фасад",
+              "size": "148 × 398 мм",
+              "count": 2
+            },
+            {
+              "key": "dveri",
+              "label": "двери",
+              "size": "398 × 510 мм",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      "id": 6,
+      "status": "Собирается",
+      "subtotal": 0,
+      "total": 0
     }
   ]
 }

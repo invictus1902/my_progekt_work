@@ -97,11 +97,11 @@ const Header = () => {
                             Оформление заказа
                         </p>
                     </Link>
-                    <Link to="/order_editor" onClick={()=>toTop()}>
-                        <p className={isActive('/order_editor') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
-                            Редактор заказов
-                        </p>
-                    </Link>
+                    {/*<Link to="/order_editor" onClick={()=>toTop()}>*/}
+                    {/*    <p className={isActive('/order_editor') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>*/}
+                    {/*        Редактор заказов*/}
+                    {/*    </p>*/}
+                    {/*</Link>*/}
                     <Link to="/view_orders" onClick={()=>toTop()}>
                         <p className={isActive('/view_orders') ? 'header__menu_nav_left__active' : 'header__menu_nav_left__botton'}>
                             Просмотр заказов
